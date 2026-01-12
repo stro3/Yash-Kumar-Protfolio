@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="generator-card">
+            <h1 class="title">Password Generator</h1>
+            <p class="subtitle">Create secure, random passwords instantly</p>
+
+            <div class="password-display">
+                <input type="text" id="passwordOutput" class="password-field" readonly placeholder="Click Generate">
+                <button id="copyBtn" class="copy-btn" title="Copy to clipboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="strength-indicator">
+                <div class="strength-bar" id="strengthBar"></div>
+            </div>
+            <p id="strengthText" class="strength-text">Password strength will appear here</p>
+
+            <div class="options-section">
+                <div class="length-control">
+                    <label for="lengthSlider">Password Length: <span id="lengthValue">16</span></label>
+                    <input type="range" id="lengthSlider" class="length-slider" min="8" max="32" value="16">
+                </div>
+
+                <div class="options-grid">
+                    <label class="option-item">
+                        <input type="checkbox" id="uppercase" checked>
+                        <span class="checkmark"></span>
+                        <span class="option-label">Uppercase (A-Z)</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="lowercase" checked>
+                        <span class="checkmark"></span>
+                        <span class="option-label">Lowercase (a-z)</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="numbers" checked>
+                        <span class="checkmark"></span>
+                        <span class="option-label">Numbers (0-9)</span>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="symbols" checked>
+                        <span class="checkmark"></span>
+                        <span class="option-label">Symbols (!@#$%)</span>
+                    </label>
+                </div>
+            </div>
+
+            <button id="generateBtn" class="generate-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path
+                        d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4">
+                    </path>
+                </svg>
+                Generate Password
+            </button>
+
+            <div id="notification" class="notification hidden">Copied to clipboard!</div>
+        </div>
+
+        <footer class="footer">
+            <p>Built by Yash Kumar</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
