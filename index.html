@@ -20,7 +20,6 @@
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#home" class="logo">DEV</a>
             <ul class="nav-menu">
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
@@ -39,15 +38,15 @@
         <div class="hero-container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    <span class="greeting">Hi, I'm</span>
-                    <span class="name">Yash Kumar</span>
+                    <span class="greeting animate-fade-up">Hi, I'm</span>
+                    <span class="name animate-fade-up delay-1">Yash Kumar</span>
                 </h1>
-                <h2 class="hero-subtitle">Full-Stack Software Engineer</h2>
-                <p class="hero-description">Building scalable web applications with modern technologies and clean
+                <h2 class="hero-subtitle animate-fade-up delay-2">Full-Stack Software Engineer</h2>
+                <p class="hero-description animate-fade-up delay-3">Building scalable web applications with modern technologies and clean
                     architecture patterns</p>
-                <a href="#projects" class="cta-button">View My Work</a>
+                <a href="#projects" class="cta-button animate-fade-up delay-4">View My Work</a>
             </div>
-            <div class="hero-visual">
+            <div class="hero-visual animate-fade-left">
                 <div class="code-window">
                     <div class="window-header">
                         <span class="dot"></span>
@@ -55,12 +54,7 @@
                         <span class="dot"></span>
                     </div>
                     <div class="code-content">
-                        <pre><code><span class="keyword">const</span> <span class="variable">developer</span> = {
-  <span class="property">name</span>: <span class="string">'Yash Kumar'</span>,
-  <span class="property">role</span>: <span class="string">'Full-Stack Engineer'</span>,
-  <span class="property">skills</span>: [<span class="string">'React'</span>, <span class="string">'Java Script'</span>, <span class="string">'CSS'</span>, <span class="string">'HTML'</span>,<span class="string">'Python'</span>],
-  <span class="property">passion</span>: <span class="string">'Building great products'</span>
-};</code></pre>
+                        <pre><code id="typewriter-code"></code><span class="typing-cursor">|</span></pre>
                     </div>
                 </div>
             </div>
@@ -69,7 +63,7 @@
 
     <section id="about" class="about">
         <div class="section-container">
-            <h2 class="section-title">About Me</h2>
+            <h2 class="section-title reveal-text">About Me</h2>
             <div class="about-content">
                 <div class="about-text">
                     <p class="about-paragraph">Hey there! I am so motivated to be able to develop user-friendly,
@@ -92,20 +86,7 @@
                         <span class="terminal-title">developer.js</span>
                     </div>
                     <div class="terminal-body">
-                        <pre><code><span class="code-keyword">class</span> <span class="code-class">Developer</span> {
-  <span class="code-keyword">constructor</span>() {
-    <span class="code-this">this</span>.name = <span class="code-string">"Yash Kumar"</span>;
-    <span class="code-this">this</span>.role = <span class="code-string">"Software Developer"</span>;
-    <span class="code-this">this</span>.languages = [
-      <span class="code-string">"Python"</span>, <span class="code-string">"Java"</span>, 
-      <span class="code-string">"JavaScript"</span>, <span class="code-string">"C++"</span>
-    ];
-  }
-  
-  <span class="code-function">sayHello</span>() {
-    <span class="code-keyword">return</span> <span class="code-string">"Let's build something!"</span>;
-  }
-}</code></pre>
+                        <pre><code id="typewriter-terminal"></code><span class="typing-cursor terminal-cursor">|</span></pre>
                     </div>
                 </div>
             </div>
@@ -114,7 +95,7 @@
 
     <section id="skills" class="skills">
         <div class="section-container">
-            <h2 class="section-title">Technical Skills</h2>
+            <h2 class="section-title reveal-text">Technical Skills</h2>
             <div class="skills-categories">
                 <div class="skill-category">
                     <h3 class="category-title">Frontend</h3>
@@ -148,7 +129,7 @@
 
     <section id="certificates" class="certificates">
         <div class="section-container">
-            <h2 class="section-title">Certifications</h2>
+            <h2 class="section-title reveal-text">Certifications</h2>
             <div class="certificates-grid">
                 <div class="certificate-card">
                     <div class="certificate-icon">
@@ -242,7 +223,7 @@
 
     <section id="projects" class="projects">
         <div class="section-container">
-            <h2 class="section-title">Featured Projects</h2>
+            <h2 class="section-title reveal-text">Featured Projects</h2>
             <div class="projects-grid" id="projectsContainer">
                 <div class="project-card">
                     <div class="project-image">
@@ -394,7 +375,7 @@
 
     <section id="services" class="services">
         <div class="section-container">
-            <h2 class="section-title">Services</h2>
+            <h2 class="section-title reveal-text">Services</h2>
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
