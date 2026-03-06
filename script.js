@@ -235,10 +235,10 @@ if (hero && heroVisual) {
         const rect = hero.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
-        
+
         heroVisual.style.transform = `translateX(${x * 20}px) translateY(${y * 20}px)`;
     });
-    
+
     hero.addEventListener('mouseleave', () => {
         heroVisual.style.transform = 'translateX(0) translateY(0)';
         heroVisual.style.transition = 'transform 0.5s ease';
@@ -277,21 +277,21 @@ if (codeElement) {
         { text: "'Building great products'", class: 'string' },
         { text: '\n};', class: '' }
     ];
-    
+
     let lineIndex = 0;
     let charIndex = 0;
-    
+
     function typeCode() {
         if (lineIndex < codeLines.length) {
             const currentPart = codeLines[lineIndex];
-            
+
             if (charIndex < currentPart.text.length) {
                 const char = currentPart.text.charAt(charIndex);
-                
+
                 if (charIndex === 0 && currentPart.class) {
                     codeElement.innerHTML += `<span class="${currentPart.class}">`;
                 }
-                
+
                 if (char === '\n') {
                     if (currentPart.class && charIndex === currentPart.text.length - 1) {
                         codeElement.innerHTML += '</span>';
@@ -301,7 +301,7 @@ if (codeElement) {
                     codeElement.innerHTML = codeElement.innerHTML.replace(/<\/span>$/, '');
                     const spans = codeElement.querySelectorAll('span');
                     const lastSpan = spans[spans.length - 1];
-                    
+
                     if (currentPart.class && lastSpan && lastSpan.className === currentPart.class) {
                         lastSpan.textContent += char;
                     } else if (currentPart.class) {
@@ -310,7 +310,7 @@ if (codeElement) {
                         codeElement.innerHTML += char;
                     }
                 }
-                
+
                 charIndex++;
                 setTimeout(typeCode, 30 + Math.random() * 30);
             } else {
@@ -320,7 +320,7 @@ if (codeElement) {
             }
         }
     }
-    
+
     // Start typing after a short delay
     setTimeout(typeCode, 1000);
 }
@@ -348,37 +348,37 @@ if (terminalElement) {
     // Syntax highlighting map
     const keywords = ['class', 'constructor', 'return'];
     const thisKeyword = 'this';
-    
+
     let terminalTyped = false;
-    
+
     function typeTerminal() {
         if (terminalTyped) return;
-        
+
         let i = 0;
         let currentHTML = '';
-        
+
         function addChar() {
             if (i < terminalCode.length) {
                 const char = terminalCode[i];
-                
+
                 if (char === '\n') {
                     currentHTML += '<br>';
                 } else {
                     // Check for keywords at current position
                     let matched = false;
-                    
+
                     // Check for 'this.'
                     if (terminalCode.substring(i, i + 5) === 'this.') {
                         currentHTML += '<span class="code-this">this</span>.';
                         i += 4;
                         matched = true;
                     }
-                    
+
                     // Check for keywords
                     if (!matched) {
                         for (const kw of keywords) {
-                            if (terminalCode.substring(i, i + kw.length) === kw && 
-                                (i === 0 || /\s/.test(terminalCode[i-1]))) {
+                            if (terminalCode.substring(i, i + kw.length) === kw &&
+                                (i === 0 || /\s/.test(terminalCode[i - 1]))) {
                                 currentHTML += `<span class="code-keyword">${kw}</span>`;
                                 i += kw.length - 1;
                                 matched = true;
@@ -386,21 +386,21 @@ if (terminalElement) {
                             }
                         }
                     }
-                    
+
                     // Check for class name (Developer)
                     if (!matched && terminalCode.substring(i, i + 9) === 'Developer') {
                         currentHTML += '<span class="code-class">Developer</span>';
                         i += 8;
                         matched = true;
                     }
-                    
+
                     // Check for function name (sayHello)
                     if (!matched && terminalCode.substring(i, i + 8) === 'sayHello') {
                         currentHTML += '<span class="code-function">sayHello</span>';
                         i += 7;
                         matched = true;
                     }
-                    
+
                     // Check for strings
                     if (!matched && char === '"') {
                         let endQuote = terminalCode.indexOf('"', i + 1);
@@ -411,12 +411,12 @@ if (terminalElement) {
                             matched = true;
                         }
                     }
-                    
+
                     if (!matched) {
                         currentHTML += char;
                     }
                 }
-                
+
                 terminalElement.innerHTML = currentHTML;
                 i++;
                 setTimeout(addChar, 25 + Math.random() * 25);
@@ -424,10 +424,10 @@ if (terminalElement) {
                 terminalTyped = true;
             }
         }
-        
+
         addChar();
     }
-    
+
     // Start typing when the about section is visible
     const aboutSection = document.querySelector('.about');
     const terminalObserver = new IntersectionObserver((entries) => {
@@ -438,7 +438,7 @@ if (terminalElement) {
             }
         });
     }, { threshold: 0.3 });
-    
+
     if (aboutSection) {
         terminalObserver.observe(aboutSection);
     }
@@ -448,7 +448,7 @@ if (terminalElement) {
 const animateCounter = (element, target, duration = 2000) => {
     let start = 0;
     const increment = target / (duration / 16);
-    
+
     const updateCounter = () => {
         start += increment;
         if (start < target) {
@@ -458,7 +458,7 @@ const animateCounter = (element, target, duration = 2000) => {
             element.textContent = target;
         }
     };
-    
+
     updateCounter();
 };
 
@@ -509,13 +509,13 @@ document.querySelectorAll('.project-card').forEach(card => {
         const rect = card.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width;
         const y = (e.clientY - rect.top) / rect.height;
-        
+
         const tiltX = (y - 0.5) * 10;
         const tiltY = (x - 0.5) * -10;
-        
+
         card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-10px)`;
     });
-    
+
     card.addEventListener('mouseleave', () => {
         card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
     });
