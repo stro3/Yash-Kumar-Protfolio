@@ -1,0 +1,121 @@
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/database');
+
+const Membership = sequelize.define('Membership', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Users',
+      key: 'id'
+    }
+  },
+  planName: {
+    type: DataTypes.ENUM('basic', 'premium', 'vip', 'student', 'corporate'),
+    allowNull: false
+  },
+  planDuration: {
+    type: DataTypes.INTEGER, // in months
+    allowNull: false
+  },
+  planPrice: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false
+  },
+  planFeatures: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    get() {
+      const value = this.getDataValue('planFeatures');
+      return value ? JSON.parse(value) : [];
+    },
+    set(value) {
+      this.setDataValue('planFeatures', JSON.stringify(value || []));
+    }
+  },
+  startDate: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW
+  },
+  endDate: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  status: {
+    type: DataTypes.ENUM('active', 'expired', 'suspended', 'cancelled'),
+    defaultValue: 'active'
+  },
+  paymentHistory: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    get() {
+      const value = this.getDataValue('paymentHistory');
+      return value ? JSON.parse(value) : [];
+    },
+    set(value) {
+      this.setDataValue('paymentHistory', JSON.stringify(value || []));
+    }
+  },
+  renewalReminder: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  },
+  autoRenewal: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  freezeHistory: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    get() {
+      const value = this.getDataValue('freezeHistory');
+      return value ? JSON.parse(value) : [];
+    },
+    set(value) {
+      this.setDataValue('freezeHistory', JSON.stringify(value || []));
+    }
+  },
+  notes: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  }
+}, {
+  tableName: 'Memberships',
+  timestamps: true,
+  hooks: {
+    beforeSave: (membership) => {
+      const now = new Date();
+      if (membership.endDate < now && membership.status === 'active') {
+        membership.status = 'expired';
+      }
+    }
+  }
+});
+
+// Instance methods
+Membership.prototype.getDaysRemaining = function() {
+  const now = new Date();
+  const diff = this.endDate - now;
+  return Math.ceil(diff / (1000 * 60 * 60 * 24));
+};
+
+Membership.prototype.isExpiringSoon = function() {
+  const daysRemaining = this.getDaysRemaining();
+  return daysRemaining <= 7 && daysRemaining > 0;
+};
+
+// Custom JSON serialization
+Membership.prototype.toJSON = function() {
+  const values = { ...this.get() };
+  values.daysRemaining = this.getDaysRemaining();
+  values.isExpiringSoon = this.isExpiringSoon();
+  return values;
+};
+
+module.exports = Membership;
