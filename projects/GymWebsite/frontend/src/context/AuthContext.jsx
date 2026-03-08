@@ -237,6 +237,42 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: AUTH_ACTIONS.LOGOUT });
   };
 
+  // Google Auth function
+  const googleAuth = async (accessToken, userInfo) => {
+    dispatch({ type: AUTH_ACTIONS.LOGIN_START });
+
+    try {
+      // Send access_token to backend for verification
+      const response = await axios.post(`${API_URL}/auth/google`, {
+        credential: accessToken,
+        userInfo
+      });
+
+      if (response.data.success) {
+        dispatch({
+          type: AUTH_ACTIONS.LOGIN_SUCCESS,
+          payload: response.data.data
+        });
+        return { success: true, isNewUser: response.data.data.isNewUser };
+      } else {
+        const errorMessage = response.data.message || 'Google authentication failed';
+        dispatch({
+          type: AUTH_ACTIONS.LOGIN_FAILURE,
+          payload: errorMessage
+        });
+        return { success: false, error: errorMessage };
+      }
+    } catch (error) {
+      console.error('Google auth error:', error.response?.data || error.message);
+      const errorMessage = error.response?.data?.message || 'Google authentication failed. Please try again.';
+      dispatch({
+        type: AUTH_ACTIONS.LOGIN_FAILURE,
+        payload: errorMessage
+      });
+      return { success: false, error: errorMessage };
+    }
+  };
+
   // Clear error function
   const clearError = () => {
     dispatch({ type: AUTH_ACTIONS.CLEAR_ERROR });
@@ -246,6 +282,7 @@ export const AuthProvider = ({ children }) => {
     ...state,
     login,
     register,
+    googleAuth,
     logout,
     clearError,
     fetchUserProfile

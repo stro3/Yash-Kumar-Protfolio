@@ -1,8 +1,12 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
+const { OAuth2Client } = require('google-auth-library');
 const User = require('../models/User');
+const { sendWelcomeEmail, sendGoogleSignupEmail } = require('../services/emailService');
 const router = express.Router();
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Generate JWT token
 const generateToken = (userId) => {
@@ -98,6 +102,10 @@ router.post('/register', [
     const userResponse = user.toJSON();
     
     console.log('✅ Registration successful for:', email);
+
+    // Send welcome email (non-blocking)
+    sendWelcomeEmail(user).catch(err => console.error('Email send failed:', err));
+
     res.status(201).json({
       success: true,
       message: 'User registered successfully',
@@ -309,6 +317,122 @@ router.post('/forgot-password', [
     res.status(500).json({
       success: false,
       message: 'Server error'
+    });
+  }
+});
+
+// Google OAuth - verify Google access token and create/login user
+router.post('/google', async (req, res) => {
+  try {
+    const { credential, userInfo } = req.body;
+
+    if (!credential) {
+      return res.status(400).json({
+        success: false,
+        message: 'Google credential token is required'
+      });
+    }
+
+    // Verify the access token with Google's tokeninfo endpoint
+    const https = require('https');
+    const tokenVerification = await new Promise((resolve, reject) => {
+      https.get(`https://oauth2.googleapis.com/tokeninfo?access_token=${encodeURIComponent(credential)}`, (resp) => {
+        let data = '';
+        resp.on('data', chunk => data += chunk);
+        resp.on('end', () => {
+          try {
+            resolve(JSON.parse(data));
+          } catch (e) {
+            reject(new Error('Failed to parse Google response'));
+          }
+        });
+      }).on('error', reject);
+    });
+
+    if (tokenVerification.error) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid Google access token'
+      });
+    }
+
+    // Use userInfo sent from frontend (already fetched from Google's userinfo endpoint)
+    const email = userInfo?.email || tokenVerification.email;
+    const googleId = userInfo?.sub || tokenVerification.sub;
+    const given_name = userInfo?.given_name || 'User';
+    const family_name = userInfo?.family_name || '';
+    const picture = userInfo?.picture || '';
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Could not retrieve email from Google account'
+      });
+    }
+
+    console.log('🔐 Google auth attempt for:', email);
+
+    // Check if user already exists with this Google ID or email
+    let user = await User.findOne({ where: { googleId } });
+    let isNewUser = false;
+
+    if (!user) {
+      // Check by email
+      user = await User.findOne({ where: { email } });
+
+      if (user) {
+        // Link Google account to existing user
+        user.googleId = googleId;
+        user.authProvider = user.authProvider === 'local' ? 'both' : 'google';
+        if (picture && !user.profileImage) {
+          user.profileImage = picture;
+        }
+        await user.save();
+        console.log('✅ Linked Google account to existing user:', email);
+      } else {
+        // Create new user from Google data
+        user = await User.create({
+          firstName: given_name,
+          lastName: family_name,
+          email,
+          googleId,
+          authProvider: 'google',
+          profileImage: picture,
+          role: 'member',
+          isActive: true
+        });
+        isNewUser = true;
+        console.log('✅ New user created via Google:', email);
+
+        // Send welcome email for new Google signups (non-blocking)
+        sendGoogleSignupEmail(user).catch(err => console.error('Email send failed:', err));
+      }
+    }
+
+    // Update last login
+    user.lastLogin = new Date();
+    await user.save();
+
+    // Generate JWT token
+    const token = generateToken(user.id);
+    const userResponse = user.toJSON();
+
+    res.json({
+      success: true,
+      message: isNewUser ? 'Account created successfully with Google' : 'Google login successful',
+      data: {
+        user: userResponse,
+        token,
+        isNewUser
+      }
+    });
+
+  } catch (error) {
+    console.error('❌ Google auth error:', error);
+
+    res.status(500).json({
+      success: false,
+      message: 'Google authentication failed. Please try again.'
     });
   }
 });

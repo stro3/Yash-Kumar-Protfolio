@@ -71,6 +71,7 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/blog', blogRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/reports', reportRoutes);
 
 // Health check endpoint
 app.get('/api/health', async (req, res) => {

@@ -41,7 +41,7 @@ const connectDB = async () => {
     const dbType = process.env.DATABASE_URL ? 'PostgreSQL' : 'SQLite';
     console.log(`✅ ${dbType} database connected successfully`);
 
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ alter: true });
     console.log('✅ Database models synchronized');
 
     return true;

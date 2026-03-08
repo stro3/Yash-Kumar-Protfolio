@@ -41,7 +41,7 @@ const User = sequelize.define('User', {
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       len: {
         args: [6, 255],
@@ -49,14 +49,17 @@ const User = sequelize.define('User', {
       }
     }
   },
+  googleId: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  authProvider: {
+    type: DataTypes.STRING,
+    defaultValue: 'local'
+  },
   phone: {
     type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: {
-        msg: 'Phone number is required'
-      }
-    }
+    allowNull: true
   },
   dateOfBirth: {
     type: DataTypes.DATE,
