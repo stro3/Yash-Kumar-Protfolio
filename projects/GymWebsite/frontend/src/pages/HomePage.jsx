@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -6,263 +6,185 @@ const HomePage = () => {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      {/* Hero Section with Background Image */}
+    <div className="min-h-screen bg-white">
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: 'url(/images/hero-main.png)',
-            filter: 'brightness(0.4)'
+            backgroundImage: 'url(https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=1920&q=80)',
+            filter: 'brightness(0.45)'
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/50 to-gray-900" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/70" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
-          <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
-            Transform Your Body
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
-              Transform Your Life
-            </span>
+          <div className="inline-block bg-orange-500/20 border border-orange-500/40 rounded-full px-6 py-2 mb-8">
+            <span className="text-orange-400 text-sm font-semibold uppercase tracking-wider">Welcome to GymFit Pro</span>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight">
+            Build Your
+            <span className="block text-orange-500">Strongest Self</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-            Join our state-of-the-art fitness center and achieve your fitness goals
-            with expert trainers, modern equipment, and personalized programs.
+          <p className="text-xl md:text-2xl text-slate-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+            Premium fitness center with world-class equipment, expert trainers,
+            and personalized programs designed for your transformation.
           </p>
 
           <div className="flex flex-col md:flex-row gap-4 justify-center">
             {!user ? (
               <>
-                <Link
-                  to="/signup"
-                  className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-10 py-4 rounded-full text-lg font-bold hover:from-blue-600 hover:to-cyan-600 transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30"
-                >
-                  Start Your Journey
+                <Link to="/signup" className="bg-orange-500 text-white px-10 py-4 rounded-lg text-lg font-bold hover:bg-orange-600 transition-all transform hover:scale-105 shadow-lg shadow-orange-500/30">
+                  Start Free Trial
                 </Link>
-                <Link
-                  to="/classes"
-                  className="border-2 border-white/30 backdrop-blur-sm text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-all"
-                >
-                  View Classes
+                <Link to="/classes" className="border-2 border-white/30 backdrop-blur-sm text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-white/10 transition-all">
+                  Explore Classes
                 </Link>
               </>
             ) : (
-              <Link
-                to="/member-portal"
-                className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-10 py-4 rounded-full text-lg font-bold hover:from-blue-600 hover:to-cyan-600 transition-all transform hover:scale-105 shadow-lg shadow-blue-500/30"
-              >
+              <Link to="/member-portal" className="bg-orange-500 text-white px-10 py-4 rounded-lg text-lg font-bold hover:bg-orange-600 transition-all transform hover:scale-105 shadow-lg shadow-orange-500/30">
                 Go to Dashboard
               </Link>
             )}
           </div>
-
-          <div className="mt-16 flex justify-center">
-            <div className="animate-bounce">
-              <svg className="w-8 h-8 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-20 bg-gray-900">
+      <section className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-all">
-              <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 mb-2">500+</div>
-              <div className="text-gray-400 text-lg">Happy Members</div>
+            <div className="p-8">
+              <div className="text-4xl md:text-5xl font-bold text-orange-500 mb-2">500+</div>
+              <div className="text-slate-600 text-lg font-medium">Active Members</div>
             </div>
-            <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-all">
-              <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 mb-2">50+</div>
-              <div className="text-gray-400 text-lg">Group Classes</div>
+            <div className="p-8">
+              <div className="text-4xl md:text-5xl font-bold text-orange-500 mb-2">50+</div>
+              <div className="text-slate-600 text-lg font-medium">Weekly Classes</div>
             </div>
-            <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-all">
-              <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 mb-2">20+</div>
-              <div className="text-gray-400 text-lg">Expert Trainers</div>
+            <div className="p-8">
+              <div className="text-4xl md:text-5xl font-bold text-orange-500 mb-2">20+</div>
+              <div className="text-slate-600 text-lg font-medium">Expert Trainers</div>
             </div>
-            <div className="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-all">
-              <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 mb-2">100+</div>
-              <div className="text-gray-400 text-lg">Modern Equipment</div>
+            <div className="p-8">
+              <div className="text-4xl md:text-5xl font-bold text-orange-500 mb-2">24/7</div>
+              <div className="text-slate-600 text-lg font-medium">Gym Access</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Image Gallery Section */}
-      <section className="py-20 bg-gray-800">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-4">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">World-Class</span> Facilities
-          </h2>
-          <p className="text-gray-400 text-center text-xl mb-16 max-w-2xl mx-auto">
-            Experience fitness like never before with our premium equipment and expert guidance
-          </p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+              Our <span className="text-orange-500">Facilities</span>
+            </h2>
+            <p className="text-slate-500 text-xl max-w-2xl mx-auto">
+              Premium equipment and spaces designed for every type of workout
+            </p>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="group relative overflow-hidden rounded-2xl aspect-[4/3]">
-              <img
-                src="/images/hero-main.png"
-                alt="Modern Gym Equipment"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="text-white text-xl font-bold">State-of-the-Art Equipment</h3>
-                <p className="text-gray-300 text-sm">Premium machines and free weights</p>
+              <img src="https://images.unsplash.com/photo-1534258936925-c58bed479fcb?w=800&q=80" alt="Modern Gym" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <h3 className="text-white text-xl font-bold">Premium Equipment</h3>
+                <p className="text-slate-300 text-sm">Latest machines and free weights</p>
               </div>
             </div>
 
             <div className="group relative overflow-hidden rounded-2xl aspect-[4/3]">
-              <img
-                src="/images/weight-training.png"
-                alt="Weight Training"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="text-white text-xl font-bold">Intense Weight Training</h3>
-                <p className="text-gray-300 text-sm">Build strength and muscle mass</p>
+              <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=80" alt="Weight Training" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <h3 className="text-white text-xl font-bold">Strength Training</h3>
+                <p className="text-slate-300 text-sm">Build power and endurance</p>
               </div>
             </div>
 
             <div className="group relative overflow-hidden rounded-2xl aspect-[4/3]">
-              <img
-                src="/images/group-class.png"
-                alt="Group Fitness Class"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="text-white text-xl font-bold">Dynamic Group Classes</h3>
-                <p className="text-gray-300 text-sm">Energy-packed sessions for all levels</p>
+              <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=800&q=80" alt="Group Class" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-6">
+                <h3 className="text-white text-xl font-bold">Group Classes</h3>
+                <p className="text-slate-300 text-sm">High-energy sessions for all levels</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section with Images */}
-      <section className="py-20 bg-gray-900">
+      <section className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
-            Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">PowerGym</span>?
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-slate-900 mb-16">
+            Why Choose <span className="text-orange-500">Us?</span>
           </h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
             <div className="order-2 lg:order-1">
-              <h3 className="text-3xl font-bold text-white mb-4">Personal Training</h3>
-              <p className="text-gray-400 text-lg mb-6 leading-relaxed">
-                Work one-on-one with our certified personal trainers who will create a customized
-                workout plan tailored to your goals. Whether you want to lose weight, build muscle,
-                or improve your overall fitness, we have got you covered.
+              <h3 className="text-3xl font-bold text-slate-900 mb-4">Personal Training</h3>
+              <p className="text-slate-500 text-lg mb-6 leading-relaxed">
+                Work one-on-one with certified personal trainers who create customized
+                workout plans tailored to your goals, whether you want to lose weight,
+                build muscle, or improve overall fitness.
               </p>
               <ul className="space-y-3">
-                <li className="flex items-center text-gray-300">
-                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-                  Personalized workout programs
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-                  Nutrition guidance and meal planning
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-                  Progress tracking and adjustments
-                </li>
+                <li className="flex items-center text-slate-700"><span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>Personalized workout programs</li>
+                <li className="flex items-center text-slate-700"><span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>Nutrition guidance and meal planning</li>
+                <li className="flex items-center text-slate-700"><span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>Weekly progress tracking</li>
               </ul>
             </div>
             <div className="order-1 lg:order-2">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-blue-500/20">
-                <img
-                  src="/images/personal-trainer.png"
-                  alt="Personal Training"
-                  className="w-full h-80 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-transparent" />
+              <div className="rounded-2xl overflow-hidden shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1571388208497-71bedc66e932?w=800&q=80" alt="Personal Training" className="w-full h-80 object-cover" />
               </div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-cyan-500/20">
-                <img
-                  src="/images/group-class.png"
-                  alt="Group Fitness"
-                  className="w-full h-80 object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-tl from-cyan-600/20 to-transparent" />
+              <div className="rounded-2xl overflow-hidden shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800&q=80" alt="Group Fitness" className="w-full h-80 object-cover" />
               </div>
             </div>
             <div>
-              <h3 className="text-3xl font-bold text-white mb-4">Group Fitness Classes</h3>
-              <p className="text-gray-400 text-lg mb-6 leading-relaxed">
-                Join our high-energy group fitness classes led by expert instructors.
+              <h3 className="text-3xl font-bold text-slate-900 mb-4">Group Fitness</h3>
+              <p className="text-slate-500 text-lg mb-6 leading-relaxed">
+                Join high-energy group fitness classes led by expert instructors.
                 From yoga and pilates to HIIT and spinning, there is something for everyone.
-                Experience the motivation of working out with others.
               </p>
               <ul className="space-y-3">
-                <li className="flex items-center text-gray-300">
-                  <span className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></span>
-                  50+ classes per week
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <span className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></span>
-                  All skill levels welcome
-                </li>
-                <li className="flex items-center text-gray-300">
-                  <span className="w-2 h-2 bg-cyan-400 rounded-full mr-3"></span>
-                  Certified instructors
-                </li>
+                <li className="flex items-center text-slate-700"><span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>50+ classes per week</li>
+                <li className="flex items-center text-slate-700"><span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>All skill levels welcome</li>
+                <li className="flex items-center text-slate-700"><span className="w-2 h-2 bg-orange-500 rounded-full mr-3"></span>Certified instructors</li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-24 relative overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: 'url(/images/weight-training.png)',
-            filter: 'brightness(0.3)'
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/80 to-cyan-600/80" />
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1920&q=80)', filter: 'brightness(0.3)' }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-orange-600/70 to-orange-500/50" />
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Ready to Start Your Fitness Journey?
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Ready to Transform?</h2>
           <p className="text-xl text-white/90 mb-10">
-            Join PowerGym today and take the first step towards a healthier, stronger you.
-            First week free for all new members!
+            Join today and get your first week free. No contracts, no commitments.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
             {!user ? (
               <>
-                <Link
-                  to="/signup"
-                  className="bg-white text-gray-900 px-10 py-4 rounded-full text-lg font-bold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg"
-                >
-                  Get Started Today
+                <Link to="/signup" className="bg-white text-slate-900 px-10 py-4 rounded-lg text-lg font-bold hover:bg-slate-100 transition-all transform hover:scale-105 shadow-lg">
+                  Get Started Free
                 </Link>
-                <Link
-                  to="/contact"
-                  className="border-2 border-white text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-all"
-                >
+                <Link to="/contact" className="border-2 border-white text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-white/10 transition-all">
                   Contact Us
                 </Link>
               </>
             ) : (
-              <Link
-                to="/classes"
-                className="bg-white text-gray-900 px-10 py-4 rounded-full text-lg font-bold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg"
-              >
-                Book Your Next Class
+              <Link to="/classes" className="bg-white text-slate-900 px-10 py-4 rounded-lg text-lg font-bold hover:bg-slate-100 transition-all transform hover:scale-105 shadow-lg">
+                Book a Class
               </Link>
             )}
           </div>

@@ -5,45 +5,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Origin Fitness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <link rel="stylesheet" href="css/style.css"/>
 <style>
     body {
-        font-family: 'Baloo Bhai', cursive;
-        color: white;
+        font-family: 'Inter', sans-serif;
+        color: #1f2937;
         margin: 0px;
         padding: 0px;
-        background: url('img/bg.jpg');
-        background-size: 100%;
+        background: #ffffff;
     }
-
 
     .left {
         display: inline-block;
-        /* border: 2px solid red; */
         position: absolute;
         left: 60px;
         top: 20px;
-        color: rgb(0, 154, 210);
+        color: #2563eb;
     }
 
     .left img {
         width: 136px;
-        filter: invert(100%);
     }
 
     .left div {
         line-height: 19px;
         font-size: 26px;
         text-align: center;
+        font-weight: 700;
     }
 
     .mid {
         display: block;
         width: 36%;
         margin: 29px auto;
-        background-color: black;
-        /* border: 2px solid green; */
+        background-color: white;
     }
 
     .right {
@@ -51,7 +48,6 @@
         right: 34px;
         top: 43px;
         display: inline-block;
-        /* border: 2px solid yellow; */
     }
 
     .navbar {
@@ -64,60 +60,69 @@
     }
 
     .navbar li a {
-        color: white;
+        color: #374151;
         text-decoration: none;
         padding: 34px 23px;
-
     }
 
     .navbar li a:hover,
     .navbar li a.active {
         text-decoration: underline;
-        color: grey;
-
+        color: #2563eb;
     }
 
     .btn {
-        font-family: 'Baloo Bhai', cursive;
+        font-family: 'Inter', sans-serif;
         margin: 0px 9px;
-        background-color: black;
+        background-color: #2563eb;
         color: white;
         padding: 4px 14px;
-        border: 2px solid grey;
+        border: 2px solid #2563eb;
         border-radius: 10px;
         font-size: 20px;
         cursor: pointer;
     }
 
     .btn:hover {
-        background-color: rgb(31, 30, 30);
+        background-color: #1d4ed8;
     }
 
     .container {
-        border: 2px solid white;
+        border: 2px solid #e5e7eb;
         margin: 106px 80px;
         padding: 75px;
         width: 33%;
         border-radius: 28px;
-        background-color: rgba(0, 0, 0, 0.6);
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
     }
 
     .form-group input {
-        font-family: 'Baloo Bhai', cursive;
+        font-family: 'Inter', sans-serif;
         text-align: center;
         display: block;
         width: 508px;
-        padding: 1px;
-        border: 2px solid black;
+        padding: 8px;
+        border: 2px solid #d1d5db;
         margin: 11px auto;
-        font-size: 25px;
+        font-size: 18px;
         border-radius: 8px;
+        color: #1f2937;
+        background-color: #ffffff;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     }
 
     .container h1 {
         text-align: center;
-        color: rgba(255, 255, 255, 0.858);
-        background-color: black;
+        color: #1f2937;
+        background-color: #f9fafb;
+        padding: 12px;
+        border-radius: 8px;
     }
 
     .container button {
@@ -129,12 +134,10 @@
 
 <body>
     <header class="header">
-        <!-- Left box for logo -->
         <div class="left">
             <img src="img/logo.png" alt="">
             <div>Origin Fitness</div>
         </div>
-        <!-- Mid box for navbar -->
         <div class="mid">
             <ul class="navbar">
                 <li><a href="#" class="active">Home</a></li>
@@ -144,7 +147,6 @@
             </ul>
         </div>
 
-        <!-- Right box for buttons -->
         <div class="right">
             <button class="btn">Call Us Now</button>
             <button class="btn">Email Us</button>

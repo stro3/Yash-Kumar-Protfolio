@@ -11,6 +11,30 @@ const generateToken = (userId) => {
   });
 };
 
+// Authenticate JWT token middleware
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: 'Access token required'
+    });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({
+        success: false,
+        message: 'Invalid or expired token'
+      });
+    }
+    req.user = decoded;
+    next();
+  });
+};
+
 // Register new user
 router.post('/register', [
   body('firstName').trim().notEmpty().withMessage('First name is required'),
@@ -109,6 +133,34 @@ router.post('/register', [
     res.status(500).json({
       success: false,
       message: 'Server error during registration'
+    });
+  }
+});
+
+// Get user profile
+router.get('/profile', authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.userId, {
+      attributes: { exclude: ['password'] }
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: user,
+      message: 'Profile retrieved successfully'
+    });
+  } catch (error) {
+    console.error('Profile fetch error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch profile'
     });
   }
 });

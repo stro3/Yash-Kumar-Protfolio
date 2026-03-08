@@ -16,6 +16,7 @@ const mockTrainers = [
     rating: 4.9,
     reviews: 127,
     availability: 'Mon-Fri: 6AM-2PM',
+    availabilityStatus: 'Available',
     languages: ['English', 'Spanish'],
     sessionPrice: '$75/hour'
   },
@@ -32,6 +33,7 @@ const mockTrainers = [
     rating: 4.8,
     reviews: 89,
     availability: 'Mon-Sat: 5AM-8PM',
+    availabilityStatus: 'Available',
     languages: ['English', 'Mandarin'],
     sessionPrice: '$85/hour'
   },
@@ -48,6 +50,7 @@ const mockTrainers = [
     rating: 4.9,
     reviews: 156,
     availability: 'Tue-Sun: 9AM-6PM',
+    availabilityStatus: 'Busy',
     languages: ['English', 'Spanish', 'Portuguese'],
     sessionPrice: '$70/hour'
   },
@@ -64,6 +67,7 @@ const mockTrainers = [
     rating: 4.7,
     reviews: 203,
     availability: 'Mon-Fri: 6AM-7PM',
+    availabilityStatus: 'Available',
     languages: ['English'],
     sessionPrice: '$80/hour'
   },
@@ -80,6 +84,7 @@ const mockTrainers = [
     rating: 4.8,
     reviews: 92,
     availability: 'Mon-Thu: 6AM-8PM, Sat: 8AM-2PM',
+    availabilityStatus: 'Available',
     languages: ['English', 'French'],
     sessionPrice: '$75/hour'
   },
@@ -96,6 +101,7 @@ const mockTrainers = [
     rating: 5.0,
     reviews: 68,
     availability: 'Mon-Wed-Fri: 10AM-4PM',
+    availabilityStatus: 'On Leave',
     languages: ['English', 'German'],
     sessionPrice: '$100/hour'
   }

@@ -5,233 +5,116 @@ const TrainerDashboard = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
 
-  // Mock data for trainer dashboard
-  const trainerStats = {
-    totalClients: 45,
-    activePlans: 38,
-    thisWeekSessions: 24,
-    completedSessions: 156,
-    averageRating: 4.8,
-    totalRatings: 89
-  };
+  const trainerStats = { totalClients: 45, activePlans: 38, thisWeekSessions: 24, completedSessions: 156, averageRating: 4.8, totalRatings: 89 };
 
   const myClients = [
-    {
-      id: 1,
-      name: 'John Smith',
-      email: 'john@example.com',
-      joinDate: '2023-10-15',
-      goal: 'Weight Loss',
-      progress: 75,
-      lastSession: '2023-12-14',
-      nextSession: '2023-12-16'
-    },
-    {
-      id: 2,
-      name: 'Sarah Wilson',
-      email: 'sarah@example.com',
-      joinDate: '2023-11-01',
-      goal: 'Muscle Gain',
-      progress: 60,
-      lastSession: '2023-12-13',
-      nextSession: '2023-12-15'
-    },
-    {
-      id: 3,
-      name: 'Mike Johnson',
-      email: 'mike@example.com',
-      joinDate: '2023-09-20',
-      goal: 'Strength Training',
-      progress: 85,
-      lastSession: '2023-12-12',
-      nextSession: '2023-12-17'
-    }
+    { id: 1, name: 'Rahul Sharma', email: 'rahul@example.com', phone: '9876543210', joinDate: '2023-10-15', membership: 'Premium', expiryDate: '2025-01-15', goal: 'Weight Loss', progress: 75, lastSession: '2024-12-14', nextSession: '2024-12-16', visitsThisMonth: 18, regularity: 'Regular' },
+    { id: 2, name: 'Priya Patel', email: 'priya@example.com', phone: '9876543211', joinDate: '2023-11-01', membership: 'Basic', expiryDate: '2025-02-10', goal: 'Muscle Gain', progress: 60, lastSession: '2024-12-13', nextSession: '2024-12-15', visitsThisMonth: 8, regularity: 'Moderate' },
+    { id: 3, name: 'Amit Singh', email: 'amit@example.com', phone: '9876543212', joinDate: '2023-09-20', membership: 'VIP', expiryDate: '2024-11-01', goal: 'Strength Training', progress: 85, lastSession: '2024-11-12', nextSession: '', visitsThisMonth: 0, regularity: 'Inactive' }
   ];
 
   const upcomingSessions = [
-    { id: 1, client: 'John Smith', date: '2023-12-16', time: '09:00 AM', type: 'Personal Training', location: 'Gym Floor' },
-    { id: 2, client: 'Sarah Wilson', date: '2023-12-16', time: '02:00 PM', type: 'Strength Training', location: 'Weight Room' },
-    { id: 3, client: 'Mike Johnson', date: '2023-12-17', time: '10:00 AM', type: 'CrossFit', location: 'CrossFit Area' }
-  ];
-
-  const workoutPlans = [
-    {
-      id: 1,
-      client: 'John Smith',
-      planName: 'Weight Loss Program',
-      duration: '12 weeks',
-      startDate: '2023-10-15',
-      progress: 75,
-      exercises: ['Cardio', 'HIIT', 'Strength Training']
-    },
-    {
-      id: 2,
-      client: 'Sarah Wilson',
-      planName: 'Muscle Building Program',
-      duration: '16 weeks',
-      startDate: '2023-11-01',
-      progress: 60,
-      exercises: ['Weight Training', 'Compound Movements', 'Progressive Overload']
-    }
+    { id: 1, client: 'Rahul Sharma', date: '2024-12-16', time: '09:00 AM', type: 'Personal Training', location: 'Gym Floor' },
+    { id: 2, client: 'Priya Patel', date: '2024-12-16', time: '02:00 PM', type: 'Strength Training', location: 'Weight Room' },
+    { id: 3, client: 'Sneha Reddy', date: '2024-12-17', time: '10:00 AM', type: 'CrossFit', location: 'CrossFit Area' }
   ];
 
   const clientProgress = [
-    { client: 'John Smith', metric: 'Weight', before: '185 lbs', current: '170 lbs', target: '160 lbs' },
-    { client: 'Sarah Wilson', metric: 'Bench Press', before: '95 lbs', current: '135 lbs', target: '155 lbs' },
-    { client: 'Mike Johnson', metric: 'Body Fat', before: '18%', current: '12%', target: '10%' }
+    { client: 'Rahul Sharma', metric: 'Weight', before: '85 kg', current: '77 kg', target: '72 kg' },
+    { client: 'Priya Patel', metric: 'Bench Press', before: '30 kg', current: '50 kg', target: '60 kg' },
+    { client: 'Amit Singh', metric: 'Body Fat', before: '18%', current: '12%', target: '10%' }
   ];
 
   const tabs = [
     { id: 'overview', name: 'Overview', icon: '📊' },
     { id: 'clients', name: 'My Clients', icon: '👥' },
     { id: 'sessions', name: 'Sessions', icon: '📅' },
-    { id: 'plans', name: 'Workout Plans', icon: '💪' },
-    { id: 'progress', name: 'Progress Tracking', icon: '📈' }
+    { id: 'progress', name: 'Progress', icon: '📈' }
   ];
+
+  const getRegularityBadge = (r) => {
+    if (r === 'Regular') return 'bg-green-100 text-green-700';
+    if (r === 'Moderate') return 'bg-blue-100 text-blue-700';
+    if (r === 'Irregular') return 'bg-yellow-100 text-yellow-700';
+    return 'bg-red-100 text-red-700';
+  };
 
   const OverviewContent = () => (
     <div className="space-y-6">
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Total Clients</p>
-              <p className="text-3xl font-bold text-gray-900">{trainerStats.totalClients}</p>
-            </div>
-            <div className="p-3 bg-blue-100 rounded-full">
-              <span className="text-blue-600 text-xl">👥</span>
-            </div>
-          </div>
-          <p className="text-sm text-green-600 mt-2">↗ +3 new this month</p>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">This Week Sessions</p>
-              <p className="text-3xl font-bold text-gray-900">{trainerStats.thisWeekSessions}</p>
-            </div>
-            <div className="p-3 bg-green-100 rounded-full">
-              <span className="text-green-600 text-xl">🏋️</span>
-            </div>
-          </div>
-          <p className="text-sm text-blue-600 mt-2">8 sessions remaining</p>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Average Rating</p>
-              <p className="text-3xl font-bold text-gray-900">{trainerStats.averageRating}</p>
-            </div>
-            <div className="p-3 bg-yellow-100 rounded-full">
-              <span className="text-yellow-600 text-xl">⭐</span>
-            </div>
-          </div>
-          <p className="text-sm text-gray-600 mt-2">Based on {trainerStats.totalRatings} reviews</p>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="bg-white border border-slate-200 p-5 rounded-xl"><p className="text-sm text-slate-500">Total Clients</p><p className="text-3xl font-bold text-slate-900">{trainerStats.totalClients}</p><p className="text-sm text-green-600 mt-1">+3 new this month</p></div>
+        <div className="bg-white border border-slate-200 p-5 rounded-xl"><p className="text-sm text-slate-500">This Week Sessions</p><p className="text-3xl font-bold text-orange-500">{trainerStats.thisWeekSessions}</p><p className="text-sm text-slate-500 mt-1">8 remaining</p></div>
+        <div className="bg-white border border-slate-200 p-5 rounded-xl"><p className="text-sm text-slate-500">Average Rating</p><p className="text-3xl font-bold text-yellow-500">{trainerStats.averageRating} ★</p><p className="text-sm text-slate-500 mt-1">{trainerStats.totalRatings} reviews</p></div>
       </div>
 
-      {/* Quick Actions and Today's Schedule */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
-          <div className="grid grid-cols-2 gap-3">
-            <button className="p-4 bg-blue-50 rounded-lg text-center hover:bg-blue-100 transition-colors">
-              <div className="text-2xl mb-2">📝</div>
-              <div className="text-sm font-medium">Create Workout Plan</div>
-            </button>
-            <button className="p-4 bg-green-50 rounded-lg text-center hover:bg-green-100 transition-colors">
-              <div className="text-2xl mb-2">📅</div>
-              <div className="text-sm font-medium">Schedule Session</div>
-            </button>
-            <button className="p-4 bg-purple-50 rounded-lg text-center hover:bg-purple-100 transition-colors">
-              <div className="text-2xl mb-2">📊</div>
-              <div className="text-sm font-medium">Record Progress</div>
-            </button>
-            <button className="p-4 bg-orange-50 rounded-lg text-center hover:bg-orange-100 transition-colors">
-              <div className="text-2xl mb-2">💬</div>
-              <div className="text-sm font-medium">Message Client</div>
-            </button>
-          </div>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-semibold mb-4">Today's Sessions</h3>
+        <div className="bg-white border border-slate-200 p-5 rounded-xl">
+          <h3 className="text-lg font-bold text-slate-900 mb-4">Client Regularity</h3>
           <div className="space-y-3">
-            {upcomingSessions.slice(0, 3).map((session) => (
-              <div key={session.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                <div>
-                  <div className="font-medium">{session.client}</div>
-                  <div className="text-sm text-gray-600">{session.type}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm font-medium">{session.time}</div>
-                  <div className="text-xs text-gray-600">{session.location}</div>
+            {myClients.map(c => (
+              <div key={c.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div><p className="font-medium text-slate-900">{c.name}</p><p className="text-sm text-slate-500">{c.visitsThisMonth} visits this month</p></div>
+                <div className="flex items-center gap-3">
+                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${getRegularityBadge(c.regularity)}`}>{c.regularity}</span>
+                  {c.expiryDate && new Date(c.expiryDate) < new Date() && <span className="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700">Expired</span>}
                 </div>
               </div>
             ))}
           </div>
+        </div>
+        <div className="bg-white border border-slate-200 p-5 rounded-xl">
+          <h3 className="text-lg font-bold text-slate-900 mb-4">Today's Sessions</h3>
+          <div className="space-y-3">
+            {upcomingSessions.map(s => (
+              <div key={s.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div><p className="font-medium text-slate-900">{s.client}</p><p className="text-sm text-slate-500">{s.type}</p></div>
+                <div className="text-right"><p className="text-sm font-medium">{s.time}</p><p className="text-xs text-slate-500">{s.location}</p></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white border-l-4 border-yellow-400 p-5 rounded-xl">
+        <h3 className="font-bold text-slate-900 mb-3">⚠️ Membership Alerts</h3>
+        <div className="space-y-2">
+          {myClients.filter(c => c.regularity === 'Inactive' || new Date(c.expiryDate) < new Date()).map(c => (
+            <div key={c.id} className="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+              <div><p className="font-medium text-slate-900">{c.name}</p><p className="text-sm text-red-600">Membership expired: {c.expiryDate}</p></div>
+              <span className="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700">{c.regularity}</span>
+            </div>
+          ))}
+          {myClients.filter(c => c.regularity === 'Inactive' || new Date(c.expiryDate) < new Date()).length === 0 && (
+            <p className="text-slate-500 text-sm">No alerts at this time.</p>
+          )}
         </div>
       </div>
     </div>
   );
 
   const ClientsContent = () => (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">My Clients</h3>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-          Add New Client
-        </button>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {myClients.map((client) => (
-          <div key={client.id} className="bg-white p-6 rounded-lg shadow">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-semibold">{client.name}</h4>
+    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="p-5 border-b border-slate-100"><h3 className="text-lg font-bold text-slate-900">My Clients</h3></div>
+      <div className="space-y-4 p-5">
+        {myClients.map(c => (
+          <div key={c.id} className="border border-slate-200 rounded-xl p-5">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h4 className="text-lg font-bold text-slate-900">{c.name}</h4>
+                <p className="text-sm text-slate-500">{c.email} | {c.phone}</p>
+              </div>
               <div className="text-right">
-                <div className="text-2xl font-bold text-blue-600">{client.progress}%</div>
-                <div className="text-xs text-gray-600">Progress</div>
+                <div className="text-2xl font-bold text-orange-500">{c.progress}%</div>
+                <span className={`text-xs px-2 py-1 rounded-full ${getRegularityBadge(c.regularity)}`}>{c.regularity}</span>
               </div>
             </div>
-            
-            <div className="space-y-2 mb-4">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Goal:</span>
-                <span className="font-medium">{client.goal}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Joined:</span>
-                <span className="font-medium">{new Date(client.joinDate).toLocaleDateString()}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Last Session:</span>
-                <span className="font-medium">{new Date(client.lastSession).toLocaleDateString()}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Next Session:</span>
-                <span className="font-medium text-blue-600">{new Date(client.nextSession).toLocaleDateString()}</span>
-              </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4 text-sm">
+              <div><span className="text-slate-400">Goal:</span> <span className="font-medium text-slate-900">{c.goal}</span></div>
+              <div><span className="text-slate-400">Plan:</span> <span className="font-medium text-slate-900">{c.membership}</span></div>
+              <div><span className="text-slate-400">Expiry:</span> <span className={`font-medium ${new Date(c.expiryDate) < new Date() ? 'text-red-600' : 'text-slate-900'}`}>{c.expiryDate}</span></div>
+              <div><span className="text-slate-400">Visits/mo:</span> <span className="font-medium text-slate-900">{c.visitsThisMonth}</span></div>
             </div>
-            
-            <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-              <div 
-                className="bg-blue-600 h-2 rounded-full" 
-                style={{ width: `${client.progress}%` }}
-              ></div>
-            </div>
-            
-            <div className="flex space-x-2">
-              <button className="flex-1 bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700">
-                View Profile
-              </button>
-              <button className="flex-1 bg-gray-200 text-gray-800 py-2 px-3 rounded text-sm hover:bg-gray-300">
-                Message
-              </button>
-            </div>
+            <div className="w-full bg-slate-100 rounded-full h-2"><div className="bg-orange-500 h-2 rounded-full" style={{ width: `${c.progress}%` }}></div></div>
           </div>
         ))}
       </div>
@@ -239,142 +122,46 @@ const TrainerDashboard = () => {
   );
 
   const SessionsContent = () => (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Upcoming Sessions</h3>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-          Schedule New Session
-        </button>
-      </div>
-      
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="p-5 border-b border-slate-100"><h3 className="text-lg font-bold text-slate-900">Upcoming Sessions</h3></div>
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead><tr className="bg-slate-50"><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Client</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Date</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Time</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Type</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Location</th></tr></thead>
+          <tbody className="divide-y divide-slate-100">
+            {upcomingSessions.map(s => (
+              <tr key={s.id} className="hover:bg-slate-50">
+                <td className="p-4 text-sm font-medium text-slate-900">{s.client}</td>
+                <td className="p-4 text-sm text-slate-600">{s.date}</td>
+                <td className="p-4 text-sm text-slate-600">{s.time}</td>
+                <td className="p-4 text-sm text-slate-600">{s.type}</td>
+                <td className="p-4 text-sm text-slate-600">{s.location}</td>
               </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {upcomingSessions.map((session) => (
-                <tr key={session.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{session.client}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{session.date}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{session.time}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{session.type}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{session.location}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                    <button className="text-blue-600 hover:text-blue-900">Edit</button>
-                    <button className="text-red-600 hover:text-red-900">Cancel</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  );
-
-  const WorkoutPlansContent = () => (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Workout Plans</h3>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-          Create New Plan
-        </button>
-      </div>
-      
-      <div className="space-y-4">
-        {workoutPlans.map((plan) => (
-          <div key={plan.id} className="bg-white p-6 rounded-lg shadow">
-            <div className="flex justify-between items-start mb-4">
-              <div>
-                <h4 className="text-lg font-semibold">{plan.planName}</h4>
-                <p className="text-gray-600">Client: {plan.client}</p>
-                <p className="text-sm text-gray-500">Duration: {plan.duration} | Started: {new Date(plan.startDate).toLocaleDateString()}</p>
-              </div>
-              <div className="text-right">
-                <div className="text-2xl font-bold text-blue-600">{plan.progress}%</div>
-                <div className="text-sm text-gray-600">Complete</div>
-              </div>
-            </div>
-            
-            <div className="mb-4">
-              <span className="text-sm font-medium text-gray-700">Focus Areas: </span>
-              <div className="mt-1 flex flex-wrap gap-1">
-                {plan.exercises.map((exercise, index) => (
-                  <span key={index} className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                    {exercise}
-                  </span>
-                ))}
-              </div>
-            </div>
-            
-            <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
-              <div 
-                className="bg-blue-600 h-2 rounded-full" 
-                style={{ width: `${plan.progress}%` }}
-              ></div>
-            </div>
-            
-            <div className="flex space-x-3">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700">
-                View Details
-              </button>
-              <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded text-sm hover:bg-gray-300">
-                Edit Plan
-              </button>
-              <button className="bg-green-600 text-white px-4 py-2 rounded text-sm hover:bg-green-700">
-                Update Progress
-              </button>
-            </div>
-          </div>
-        ))}
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 
   const ProgressContent = () => (
-    <div className="space-y-6">
-      <h3 className="text-lg font-semibold">Client Progress Tracking</h3>
-      
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Metric</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Before</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Target</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Progress</th>
+    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="p-5 border-b border-slate-100"><h3 className="text-lg font-bold text-slate-900">Client Progress</h3></div>
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead><tr className="bg-slate-50"><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Client</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Metric</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Before</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Current</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Target</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Status</th></tr></thead>
+          <tbody className="divide-y divide-slate-100">
+            {clientProgress.map((p, i) => (
+              <tr key={i} className="hover:bg-slate-50">
+                <td className="p-4 text-sm font-medium text-slate-900">{p.client}</td>
+                <td className="p-4 text-sm text-slate-700">{p.metric}</td>
+                <td className="p-4 text-sm text-slate-500">{p.before}</td>
+                <td className="p-4 text-sm font-semibold text-orange-500">{p.current}</td>
+                <td className="p-4 text-sm text-slate-700">{p.target}</td>
+                <td className="p-4"><span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">On Track</span></td>
               </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {clientProgress.map((progress, index) => (
-                <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{progress.client}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{progress.metric}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{progress.before}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{progress.current}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{progress.target}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                      On Track
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -384,45 +171,29 @@ const TrainerDashboard = () => {
       case 'overview': return <OverviewContent />;
       case 'clients': return <ClientsContent />;
       case 'sessions': return <SessionsContent />;
-      case 'plans': return <WorkoutPlansContent />;
       case 'progress': return <ProgressContent />;
       default: return <OverviewContent />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Trainer Dashboard</h1>
-          <p className="text-gray-600">Welcome back, {user?.firstName || 'Trainer'}! Manage your clients and training programs.</p>
-        </div>
-
-        {/* Navigation Tabs */}
-        <div className="bg-white rounded-lg shadow mb-6">
-          <div className="border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8 px-6" aria-label="Tabs">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                    activeTab === tab.id
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  <span className="mr-2">{tab.icon}</span>
-                  {tab.name}
-                </button>
-              ))}
-            </nav>
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="lg:w-56 flex-shrink-0">
+            <div className="bg-white border border-slate-200 rounded-xl p-4 sticky top-24">
+              <div className="mb-4 p-3 bg-orange-500 rounded-xl text-center"><p className="text-white font-bold">Trainer Panel</p><p className="text-white/70 text-xs">{user?.firstName || 'Trainer'}</p></div>
+              <div className="space-y-1">
+                {tabs.map(t => (
+                  <button key={t.id} onClick={() => setActiveTab(t.id)} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-left ${activeTab === t.id ? 'bg-orange-500 text-white' : 'text-slate-600 hover:bg-slate-50'}`}>
+                    <span>{t.icon}</span><span>{t.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
+          <div className="flex-1 min-w-0">{renderContent()}</div>
         </div>
-
-        {/* Content */}
-        {renderContent()}
       </div>
     </div>
   );

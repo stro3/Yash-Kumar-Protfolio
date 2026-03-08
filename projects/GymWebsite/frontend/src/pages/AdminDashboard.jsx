@@ -1,32 +1,42 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
 
-  // Mock data for admin dashboard
   const dashboardStats = {
     totalMembers: 1247,
     activeMembers: 1098,
-    totalRevenue: 125890,
-    monthlyRevenue: 18450,
+    totalRevenue: 10475000,
+    monthlyRevenue: 1537500,
     totalClasses: 45,
     totalTrainers: 12,
     todayVisits: 89,
     pendingPayments: 23
   };
 
-  const recentMembers = [
-    { id: 1, name: 'John Smith', email: 'john@example.com', joinDate: '2023-12-15', membership: 'Premium', status: 'Active' },
-    { id: 2, name: 'Sarah Johnson', email: 'sarah@example.com', joinDate: '2023-12-14', membership: 'Basic', status: 'Active' },
-    { id: 3, name: 'Mike Wilson', email: 'mike@example.com', joinDate: '2023-12-13', membership: 'Premium', status: 'Pending' }
+  const allMembers = [
+    { id: 1, name: 'Rahul Sharma', email: 'rahul@example.com', phone: '9876543210', joinDate: '2024-01-15', membership: 'Premium', expiryDate: '2025-01-15', status: 'Active', visitsThisMonth: 18, totalVisits: 156, regularity: 'Regular' },
+    { id: 2, name: 'Priya Patel', email: 'priya@example.com', phone: '9876543211', joinDate: '2024-02-10', membership: 'Basic', expiryDate: '2025-02-10', status: 'Active', visitsThisMonth: 8, totalVisits: 72, regularity: 'Moderate' },
+    { id: 3, name: 'Amit Singh', email: 'amit@example.com', phone: '9876543212', joinDate: '2023-11-01', membership: 'VIP', expiryDate: '2024-11-01', status: 'Expired', visitsThisMonth: 0, totalVisits: 220, regularity: 'Inactive' },
+    { id: 4, name: 'Sneha Reddy', email: 'sneha@example.com', phone: '9876543213', joinDate: '2024-03-01', membership: 'Premium', expiryDate: '2025-03-01', status: 'Active', visitsThisMonth: 22, totalVisits: 198, regularity: 'Regular' },
+    { id: 5, name: 'Vikram Joshi', email: 'vikram@example.com', phone: '9876543214', joinDate: '2024-06-15', membership: 'Basic', expiryDate: '2025-03-15', status: 'Active', visitsThisMonth: 3, totalVisits: 25, regularity: 'Irregular' },
+    { id: 6, name: 'Ananya Gupta', email: 'ananya@example.com', phone: '9876543215', joinDate: '2024-01-20', membership: 'Premium', expiryDate: '2024-03-20', status: 'Expired', visitsThisMonth: 0, totalVisits: 45, regularity: 'Inactive' }
   ];
 
+  const expiringMembers = allMembers.filter(m => {
+    const expiry = new Date(m.expiryDate);
+    const today = new Date();
+    const daysLeft = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+    return daysLeft <= 30 || m.status === 'Expired';
+  });
+
   const recentPayments = [
-    { id: 1, member: 'John Smith', amount: 79.99, date: '2023-12-15', status: 'Completed', method: 'Credit Card' },
-    { id: 2, member: 'Sarah Johnson', amount: 49.99, date: '2023-12-14', status: 'Completed', method: 'PayPal' },
-    { id: 3, member: 'Mike Wilson', amount: 79.99, date: '2023-12-13', status: 'Pending', method: 'Bank Transfer' }
+    { id: 1, member: 'Rahul Sharma', amount: 4999, date: '2024-12-15', status: 'Completed', method: 'UPI' },
+    { id: 2, member: 'Priya Patel', amount: 2499, date: '2024-12-14', status: 'Completed', method: 'Card' },
+    { id: 3, member: 'Vikram Joshi', amount: 2499, date: '2024-12-13', status: 'Pending', method: 'Bank Transfer' }
   ];
 
   const trainers = [
@@ -36,114 +46,73 @@ const AdminDashboard = () => {
   ];
 
   const upcomingClasses = [
-    { id: 1, name: 'Morning Yoga', instructor: 'Sarah Johnson', time: '07:00 AM', capacity: 20, booked: 18 },
-    { id: 2, name: 'HIIT Cardio', instructor: 'Emma Wilson', time: '06:00 PM', capacity: 25, booked: 22 },
-    { id: 3, name: 'CrossFit Bootcamp', instructor: 'Mike Chen', time: '06:00 PM', capacity: 15, booked: 12 }
+    { id: 1, name: 'Morning Yoga', instructor: 'Sarah Johnson', time: '07:00 AM', capacity: 25, booked: 18 },
+    { id: 2, name: 'HIIT Cardio', instructor: 'Emma Wilson', time: '06:00 PM', capacity: 30, booked: 22 },
+    { id: 3, name: 'CrossFit Bootcamp', instructor: 'Mike Chen', time: '06:00 PM', capacity: 20, booked: 12 }
   ];
 
   const tabs = [
     { id: 'overview', name: 'Overview', icon: '📊' },
     { id: 'members', name: 'Members', icon: '👥' },
-    { id: 'trainers', name: 'Trainers', icon: '🏃‍♂️' },
+    { id: 'expiry', name: 'Expiry Alerts', icon: '⚠️' },
+    { id: 'trainers', name: 'Trainers', icon: '🏃' },
     { id: 'classes', name: 'Classes', icon: '📅' },
-    { id: 'payments', name: 'Payments', icon: '💳' },
-    { id: 'reports', name: 'Reports', icon: '📈' }
+    { id: 'payments', name: 'Payments', icon: '💳' }
   ];
+
+  const getRegularityBadge = (r) => {
+    if (r === 'Regular') return 'bg-green-100 text-green-700';
+    if (r === 'Moderate') return 'bg-blue-100 text-blue-700';
+    if (r === 'Irregular') return 'bg-yellow-100 text-yellow-700';
+    return 'bg-red-100 text-red-700';
+  };
 
   const OverviewContent = () => (
     <div className="space-y-6">
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Total Members</p>
-              <p className="text-3xl font-bold text-gray-900">{dashboardStats.totalMembers.toLocaleString()}</p>
-            </div>
-            <div className="p-3 bg-blue-100 rounded-full">
-              <span className="text-blue-600 text-xl">👥</span>
-            </div>
-          </div>
-          <p className="text-sm text-green-600 mt-2">↗ +12% from last month</p>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Monthly Revenue</p>
-              <p className="text-3xl font-bold text-gray-900">${dashboardStats.monthlyRevenue.toLocaleString()}</p>
-            </div>
-            <div className="p-3 bg-green-100 rounded-full">
-              <span className="text-green-600 text-xl">💰</span>
-            </div>
-          </div>
-          <p className="text-sm text-green-600 mt-2">↗ +8% from last month</p>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Active Members</p>
-              <p className="text-3xl font-bold text-gray-900">{dashboardStats.activeMembers.toLocaleString()}</p>
-            </div>
-            <div className="p-3 bg-purple-100 rounded-full">
-              <span className="text-purple-600 text-xl">✅</span>
-            </div>
-          </div>
-          <p className="text-sm text-yellow-600 mt-2">→ 88% of total members</p>
-        </div>
-
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Today's Visits</p>
-              <p className="text-3xl font-bold text-gray-900">{dashboardStats.todayVisits}</p>
-            </div>
-            <div className="p-3 bg-orange-100 rounded-full">
-              <span className="text-orange-600 text-xl">🏋️</span>
-            </div>
-          </div>
-          <p className="text-sm text-blue-600 mt-2">Real-time count</p>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white border border-slate-200 p-5 rounded-xl"><p className="text-sm text-slate-500">Total Members</p><p className="text-3xl font-bold text-slate-900">{dashboardStats.totalMembers.toLocaleString('en-IN')}</p><p className="text-sm text-green-600 mt-1">+12% from last month</p></div>
+        <div className="bg-white border border-slate-200 p-5 rounded-xl"><p className="text-sm text-slate-500">Monthly Revenue</p><p className="text-3xl font-bold text-slate-900">₹{dashboardStats.monthlyRevenue.toLocaleString('en-IN')}</p><p className="text-sm text-green-600 mt-1">+8% from last month</p></div>
+        <div className="bg-white border border-slate-200 p-5 rounded-xl"><p className="text-sm text-slate-500">Active Members</p><p className="text-3xl font-bold text-slate-900">{dashboardStats.activeMembers.toLocaleString('en-IN')}</p><p className="text-sm text-slate-500 mt-1">88% of total</p></div>
+        <div className="bg-white border border-slate-200 p-5 rounded-xl"><p className="text-sm text-slate-500">Today's Visits</p><p className="text-3xl font-bold text-orange-500">{dashboardStats.todayVisits}</p><p className="text-sm text-slate-500 mt-1">Real-time</p></div>
       </div>
 
-      {/* Charts and Recent Activity */}
+      {expiringMembers.length > 0 && (
+        <div className="bg-white border-l-4 border-red-500 p-5 rounded-xl shadow-sm">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2"><span className="text-xl">⚠️</span><h3 className="text-lg font-bold text-slate-900">Membership Renewals</h3></div>
+            <span className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold">{expiringMembers.filter(m => m.status === 'Expired').length} Expired</span>
+          </div>
+          <div className="space-y-2">
+            {expiringMembers.slice(0, 3).map(m => (
+              <div key={m.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div><p className="font-medium text-slate-900">{m.name}</p><p className="text-sm text-slate-500">{m.email}</p></div>
+                <div className="flex items-center gap-3"><span className="text-sm text-slate-500">{m.membership}</span><span className={`text-xs px-2 py-1 rounded-full font-medium ${m.status === 'Expired' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}`}>{m.status}</span></div>
+              </div>
+            ))}
+          </div>
+          <button onClick={() => setActiveTab('expiry')} className="mt-3 text-orange-500 hover:text-orange-600 font-medium text-sm">View All →</button>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-semibold mb-4">Recent Members</h3>
+        <div className="bg-white border border-slate-200 p-5 rounded-xl">
+          <h3 className="text-lg font-bold text-slate-900 mb-4">Recent Members</h3>
           <div className="space-y-3">
-            {recentMembers.map((member) => (
-              <div key={member.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                <div>
-                  <div className="font-medium">{member.name}</div>
-                  <div className="text-sm text-gray-600">{member.email}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm font-medium">{member.membership}</div>
-                  <span className={`text-xs px-2 py-1 rounded ${
-                    member.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                  }`}>
-                    {member.status}
-                  </span>
-                </div>
+            {allMembers.slice(0, 3).map(m => (
+              <div key={m.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div><p className="font-medium text-slate-900">{m.name}</p><p className="text-sm text-slate-500">{m.email}</p></div>
+                <div className="text-right"><p className="text-sm font-medium">{m.membership}</p><span className={`text-xs px-2 py-1 rounded-full ${getRegularityBadge(m.regularity)}`}>{m.regularity}</span></div>
               </div>
             ))}
           </div>
         </div>
-
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h3 className="text-lg font-semibold mb-4">Today's Classes</h3>
+        <div className="bg-white border border-slate-200 p-5 rounded-xl">
+          <h3 className="text-lg font-bold text-slate-900 mb-4">Today's Classes</h3>
           <div className="space-y-3">
-            {upcomingClasses.map((classItem) => (
-              <div key={classItem.id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
-                <div>
-                  <div className="font-medium">{classItem.name}</div>
-                  <div className="text-sm text-gray-600">{classItem.instructor}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm font-medium">{classItem.time}</div>
-                  <div className="text-xs text-gray-600">{classItem.booked}/{classItem.capacity} booked</div>
-                </div>
+            {upcomingClasses.map(c => (
+              <div key={c.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                <div><p className="font-medium text-slate-900">{c.name}</p><p className="text-sm text-slate-500">{c.instructor}</p></div>
+                <div className="text-right"><p className="text-sm font-medium">{c.time}</p><p className="text-xs text-slate-500">{c.booked}/{c.capacity} booked</p></div>
               </div>
             ))}
           </div>
@@ -153,53 +122,47 @@ const AdminDashboard = () => {
   );
 
   const MembersContent = () => (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Member Management</h3>
-        <div className="flex space-x-3">
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-            Add Member
-          </button>
-          <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300">
-            Export List
-          </button>
-        </div>
+    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="p-5 border-b border-slate-100 flex justify-between items-center">
+        <h3 className="text-lg font-bold text-slate-900">All Members</h3>
+        <div className="text-sm text-slate-500">{allMembers.length} members</div>
       </div>
-      
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Member</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Membership</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Join Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead><tr className="bg-slate-50"><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Name</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Plan</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Expiry</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Visits/Month</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Regularity</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Status</th></tr></thead>
+          <tbody className="divide-y divide-slate-100">
+            {allMembers.map(m => (
+              <tr key={m.id} className="hover:bg-slate-50">
+                <td className="p-4"><p className="font-medium text-slate-900">{m.name}</p><p className="text-xs text-slate-500">{m.email}</p></td>
+                <td className="p-4 text-sm text-slate-700">{m.membership}</td>
+                <td className="p-4 text-sm text-slate-700">{m.expiryDate}</td>
+                <td className="p-4 text-sm font-semibold text-slate-900">{m.visitsThisMonth}</td>
+                <td className="p-4"><span className={`text-xs px-2 py-1 rounded-full font-medium ${getRegularityBadge(m.regularity)}`}>{m.regularity}</span></td>
+                <td className="p-4"><span className={`text-xs px-2 py-1 rounded-full ${m.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{m.status}</span></td>
               </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {recentMembers.map((member) => (
-                <tr key={member.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">{member.name}</div>
-                      <div className="text-sm text-gray-500">{member.email}</div>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{member.membership}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{member.joinDate}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      member.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {member.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                    <button className="text-blue-600 hover:text-blue-900">Edit</button>
-                    <button className="text-red-600 hover:text-red-900">Suspend</button>
-                  </td>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
+  const ExpiryContent = () => (
+    <div className="space-y-4">
+      <div className="bg-red-50 border border-red-200 p-4 rounded-xl"><p className="text-red-700 font-semibold">⚠️ {expiringMembers.filter(m => m.status === 'Expired').length} members have expired memberships. {expiringMembers.filter(m => m.status !== 'Expired').length} are expiring within 30 days.</p></div>
+      <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead><tr className="bg-slate-50"><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Member</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Plan</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Expiry Date</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Last Visit</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Regularity</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Status</th></tr></thead>
+            <tbody className="divide-y divide-slate-100">
+              {expiringMembers.map(m => (
+                <tr key={m.id} className="hover:bg-slate-50">
+                  <td className="p-4"><p className="font-medium text-slate-900">{m.name}</p><p className="text-xs text-slate-500">{m.phone}</p></td>
+                  <td className="p-4 text-sm">{m.membership}</td>
+                  <td className="p-4 text-sm font-medium text-red-600">{m.expiryDate}</td>
+                  <td className="p-4 text-sm">{m.visitsThisMonth > 0 ? `${m.visitsThisMonth} this month` : 'Not visited'}</td>
+                  <td className="p-4"><span className={`text-xs px-2 py-1 rounded-full font-medium ${getRegularityBadge(m.regularity)}`}>{m.regularity}</span></td>
+                  <td className="p-4"><span className={`text-xs px-2 py-1 rounded-full font-medium ${m.status === 'Expired' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}`}>{m.status}</span></td>
                 </tr>
               ))}
             </tbody>
@@ -210,46 +173,34 @@ const AdminDashboard = () => {
   );
 
   const TrainersContent = () => (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Trainer Management</h3>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-          Add Trainer
-        </button>
+    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="p-5 border-b border-slate-100"><h3 className="text-lg font-bold text-slate-900">Trainers</h3></div>
+      <div className="divide-y divide-slate-100">
+        {trainers.map(t => (
+          <div key={t.id} className="flex items-center justify-between p-5">
+            <div><p className="font-semibold text-slate-900">{t.name}</p><p className="text-sm text-slate-500">{t.speciality}</p></div>
+            <div className="flex items-center gap-6 text-sm">
+              <div><span className="text-slate-400">Members:</span> <span className="font-semibold text-slate-900">{t.members}</span></div>
+              <div><span className="text-yellow-400">★</span> <span className="font-semibold">{t.rating}</span></div>
+              <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">{t.status}</span>
+            </div>
+          </div>
+        ))}
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {trainers.map((trainer) => (
-          <div key={trainer.id} className="bg-white p-6 rounded-lg shadow">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="text-lg font-semibold">{trainer.name}</h4>
-              <span className={`px-2 py-1 text-xs rounded ${
-                trainer.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-              }`}>
-                {trainer.status}
-              </span>
-            </div>
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Speciality:</span>
-                <span className="font-medium">{trainer.speciality}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Members:</span>
-                <span className="font-medium">{trainer.members}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Rating:</span>
-                <span className="font-medium">⭐ {trainer.rating}</span>
-              </div>
-            </div>
-            <div className="mt-4 flex space-x-2">
-              <button className="flex-1 bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700">
-                View Profile
-              </button>
-              <button className="flex-1 bg-gray-200 text-gray-800 py-2 px-3 rounded text-sm hover:bg-gray-300">
-                Edit
-              </button>
+    </div>
+  );
+
+  const ClassesContent = () => (
+    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="p-5 border-b border-slate-100"><h3 className="text-lg font-bold text-slate-900">Classes Schedule</h3></div>
+      <div className="divide-y divide-slate-100">
+        {upcomingClasses.map(c => (
+          <div key={c.id} className="flex items-center justify-between p-5">
+            <div><p className="font-semibold text-slate-900">{c.name}</p><p className="text-sm text-slate-500">{c.instructor}</p></div>
+            <div className="flex items-center gap-4 text-sm">
+              <span className="font-medium">{c.time}</span>
+              <div className="w-24 bg-slate-100 rounded-full h-2"><div className="bg-orange-500 h-2 rounded-full" style={{ width: `${(c.booked / c.capacity) * 100}%` }}></div></div>
+              <span className="text-slate-500">{c.booked}/{c.capacity}</span>
             </div>
           </div>
         ))}
@@ -258,54 +209,23 @@ const AdminDashboard = () => {
   );
 
   const PaymentsContent = () => (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Payment Management</h3>
-        <div className="flex space-x-3">
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-            Process Payment
-          </button>
-          <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300">
-            Export Report
-          </button>
-        </div>
-      </div>
-      
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Member</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <div className="p-5 border-b border-slate-100"><h3 className="text-lg font-bold text-slate-900">Recent Payments</h3></div>
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead><tr className="bg-slate-50"><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Member</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Amount</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Date</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Method</th><th className="text-left p-4 text-xs font-semibold text-slate-500 uppercase">Status</th></tr></thead>
+          <tbody className="divide-y divide-slate-100">
+            {recentPayments.map(p => (
+              <tr key={p.id} className="hover:bg-slate-50">
+                <td className="p-4 text-sm font-medium text-slate-900">{p.member}</td>
+                <td className="p-4 text-sm font-semibold text-slate-900">₹{p.amount.toLocaleString('en-IN')}</td>
+                <td className="p-4 text-sm text-slate-600">{p.date}</td>
+                <td className="p-4 text-sm text-slate-600">{p.method}</td>
+                <td className="p-4"><span className={`text-xs px-2 py-1 rounded-full ${p.status === 'Completed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{p.status}</span></td>
               </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {recentPayments.map((payment) => (
-                <tr key={payment.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{payment.member}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${payment.amount}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{payment.date}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{payment.method}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      payment.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {payment.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button className="text-blue-600 hover:text-blue-900">View Details</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -314,45 +234,33 @@ const AdminDashboard = () => {
     switch (activeTab) {
       case 'overview': return <OverviewContent />;
       case 'members': return <MembersContent />;
+      case 'expiry': return <ExpiryContent />;
       case 'trainers': return <TrainersContent />;
+      case 'classes': return <ClassesContent />;
       case 'payments': return <PaymentsContent />;
       default: return <OverviewContent />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-gray-600">Welcome back, {user?.firstName || 'Admin'}! Here's your gym overview.</p>
-        </div>
-
-        {/* Navigation Tabs */}
-        <div className="bg-white rounded-lg shadow mb-6">
-          <div className="border-b border-gray-200">
-            <nav className="-mb-px flex space-x-8 px-6" aria-label="Tabs">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                    activeTab === tab.id
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  <span className="mr-2">{tab.icon}</span>
-                  {tab.name}
-                </button>
-              ))}
-            </nav>
+        <div className="flex flex-col lg:flex-row gap-8">
+          <div className="lg:w-56 flex-shrink-0">
+            <div className="bg-white border border-slate-200 rounded-xl p-4 sticky top-24">
+              <div className="mb-4 p-3 bg-slate-900 rounded-xl text-center"><p className="text-white font-bold">Admin Panel</p><p className="text-slate-400 text-xs">{user?.firstName || 'Admin'}</p></div>
+              <div className="space-y-1">
+                {tabs.map(t => (
+                  <button key={t.id} onClick={() => setActiveTab(t.id)} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all text-left ${activeTab === t.id ? 'bg-orange-500 text-white' : 'text-slate-600 hover:bg-slate-50'}`}>
+                    <span>{t.icon}</span><span>{t.name}</span>
+                    {t.id === 'expiry' && expiringMembers.length > 0 && <span className={`ml-auto text-xs px-1.5 py-0.5 rounded-full ${activeTab === t.id ? 'bg-white/30' : 'bg-red-100 text-red-600'}`}>{expiringMembers.length}</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
+          <div className="flex-1 min-w-0">{renderContent()}</div>
         </div>
-
-        {/* Content */}
-        {renderContent()}
       </div>
     </div>
   );
