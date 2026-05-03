@@ -160,8 +160,8 @@ router.get('/:id', (req, res) => {
   }
 });
 
-// Contact trainer (placeholder)
-router.post('/:id/contact', (req, res) => {
+// Contact trainer (persists to DB)
+router.post('/:id/contact', async (req, res) => {
   try {
     const trainerId = parseInt(req.params.id);
     const trainer = mockTrainers.find(trainer => trainer.id === trainerId);
@@ -175,13 +175,37 @@ router.post('/:id/contact', (req, res) => {
     
     const { serviceType, preferredDate, message } = req.body;
     
-    // In a real app, this would save to database and send email
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token) {
+      try {
+        const jwt = require('jsonwebtoken');
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const ClassBooking = require('../models/ClassBooking');
+        await ClassBooking.create({
+          userId: decoded.userId,
+          classId: 0,
+          className: `Trainer Contact: ${serviceType}`,
+          instructor: trainer.name,
+          date: preferredDate || new Date().toISOString().split('T')[0],
+          time: trainer.availability,
+          status: 'Contacted',
+          trainerId: trainerId,
+          trainerName: trainer.name,
+          trainerSpecialty: trainer.specialties.join(', '),
+          contactMessage: message
+        });
+      } catch (e) {
+        console.error('Failed to save trainer contact:', e);
+      }
+    }
+    
     res.json({
       success: true,
       message: 'Message sent successfully! The trainer will contact you soon.',
       data: {
         trainerId: trainerId,
-        contactRequestId: Date.now(), // Mock contact request ID
+        contactRequestId: Date.now(),
         serviceType,
         preferredDate,
         message
@@ -193,6 +217,35 @@ router.post('/:id/contact', (req, res) => {
       success: false,
       message: 'Error sending message to trainer'
     });
+  }
+});
+
+// Get my trainer (last contacted)
+router.get('/my-trainer', async (req, res) => {
+  try {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token) return res.json({ success: true, data: null });
+
+    const jwt = require('jsonwebtoken');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const ClassBooking = require('../models/ClassBooking');
+    
+    const contact = await ClassBooking.findOne({
+      where: { userId: decoded.userId, trainerId: { [require('sequelize').Op.ne]: null } },
+      order: [['createdAt', 'DESC']]
+    });
+    
+    if (!contact) return res.json({ success: true, data: null });
+    
+    const trainer = mockTrainers.find(t => t.id === contact.trainerId);
+    res.json({
+      success: true,
+      data: trainer ? { ...trainer, contactDate: contact.createdAt, contactMessage: contact.contactMessage } : null
+    });
+  } catch (error) {
+    console.error('My trainer error:', error);
+    res.json({ success: true, data: null });
   }
 });
 

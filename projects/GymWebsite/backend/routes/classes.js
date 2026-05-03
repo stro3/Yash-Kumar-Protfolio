@@ -1,4 +1,6 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const ClassBooking = require('../models/ClassBooking');
 const router = express.Router();
 
 const mockClasses = [
@@ -16,16 +18,40 @@ const mockClasses = [
   { id: 12, name: 'Evening Stretch & Recovery', category: 'yoga', instructor: 'Dr. Lisa Anderson', duration: '40 min', difficulty: 'Beginner', description: 'Gentle stretching and foam rolling for muscle recovery', schedule: [{ day: 'Monday', time: '8:00 PM' }, { day: 'Tuesday', time: '8:00 PM' }, { day: 'Thursday', time: '8:00 PM' }], maxCapacity: 25, currentBookings: 9, price: 'Free with membership' }
 ];
 
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.status(401).json({ success: false, message: 'Access token required' });
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(403).json({ success: false, message: 'Invalid token' });
+    req.user = decoded;
+    next();
+  });
+};
+
 router.get('/', (req, res) => {
   try {
     const { category } = req.query;
-    let filteredClasses = mockClasses;
+    let filtered = mockClasses;
     if (category && category !== 'all') {
-      filteredClasses = mockClasses.filter(cls => cls.category === category);
+      filtered = mockClasses.filter(cls => cls.category === category);
     }
-    res.json({ success: true, data: filteredClasses, message: 'Classes retrieved successfully' });
+    res.json({ success: true, data: filtered, message: 'Classes retrieved successfully' });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error fetching classes' });
+  }
+});
+
+router.get('/my-bookings', authenticateToken, async (req, res) => {
+  try {
+    const bookings = await ClassBooking.findAll({
+      where: { userId: req.user.userId },
+      order: [['createdAt', 'DESC']]
+    });
+    res.json({ success: true, data: bookings });
+  } catch (error) {
+    console.error('Fetch bookings error:', error);
+    res.status(500).json({ success: false, message: 'Error fetching bookings' });
   }
 });
 
@@ -34,13 +60,13 @@ router.get('/:id', (req, res) => {
     const classId = parseInt(req.params.id);
     const classItem = mockClasses.find(cls => cls.id === classId);
     if (!classItem) return res.status(404).json({ success: false, message: 'Class not found' });
-    res.json({ success: true, data: classItem, message: 'Class retrieved successfully' });
+    res.json({ success: true, data: classItem });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error fetching class' });
   }
 });
 
-router.post('/:id/book', (req, res) => {
+router.post('/:id/book', authenticateToken, async (req, res) => {
   try {
     const classId = parseInt(req.params.id);
     const classItem = mockClasses.find(cls => cls.id === classId);
@@ -48,13 +74,26 @@ router.post('/:id/book', (req, res) => {
     if (classItem.currentBookings >= classItem.maxCapacity) {
       return res.status(400).json({ success: false, message: 'Class is full. No spots available.' });
     }
+
+    const nextSchedule = classItem.schedule[0] || { day: 'Monday', time: '7:00 AM' };
+    const booking = await ClassBooking.create({
+      userId: req.user.userId,
+      classId: classId,
+      className: classItem.name,
+      instructor: classItem.instructor,
+      date: nextSchedule.day,
+      time: nextSchedule.time,
+      status: 'Confirmed'
+    });
+
     classItem.currentBookings += 1;
     res.json({
       success: true,
       message: 'Class booked successfully!',
-      data: { classId, bookingId: Date.now(), availableSpots: classItem.maxCapacity - classItem.currentBookings }
+      data: { classId, bookingId: booking.id, availableSpots: classItem.maxCapacity - classItem.currentBookings }
     });
   } catch (error) {
+    console.error('Booking error:', error);
     res.status(500).json({ success: false, message: 'Error booking class' });
   }
 });

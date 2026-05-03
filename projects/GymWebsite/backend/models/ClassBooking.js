@@ -1,83 +1,59 @@
-const mongoose = require('mongoose');
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/database');
 
-const classBookingSchema = new mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+const ClassBooking = sequelize.define('ClassBooking', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
   },
-  class: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Class',
-    required: true
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   },
-  bookingDate: {
-    type: Date,
-    required: true
+  classId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   },
-  timeSlot: {
-    startTime: {
-      type: String,
-      required: true
-    },
-    endTime: {
-      type: String,
-      required: true
-    }
+  className: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  instructor: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  date: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  time: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   status: {
-    type: String,
-    enum: ['confirmed', 'waitlist', 'cancelled', 'completed', 'no_show'],
-    default: 'confirmed'
+    type: DataTypes.STRING,
+    defaultValue: 'Confirmed'
   },
-  paymentStatus: {
-    type: String,
-    enum: ['paid', 'pending', 'refunded', 'free'],
-    default: 'free'
+  trainerId: {
+    type: DataTypes.INTEGER,
+    allowNull: true
   },
-  paymentAmount: {
-    type: Number,
-    default: 0
+  trainerName: {
+    type: DataTypes.STRING,
+    allowNull: true
   },
-  cancellationReason: String,
-  cancellationDate: Date,
-  attendanceMarked: {
-    type: Boolean,
-    default: false
+  trainerSpecialty: {
+    type: DataTypes.STRING,
+    allowNull: true
   },
-  attendanceTime: Date,
-  notes: String,
-  reminderSent: {
-    type: Boolean,
-    default: false
+  contactMessage: {
+    type: DataTypes.TEXT,
+    allowNull: true
   }
 }, {
+  tableName: 'ClassBookings',
   timestamps: true
 });
 
-// Compound index to prevent double booking
-classBookingSchema.index({ 
-  user: 1, 
-  class: 1, 
-  bookingDate: 1, 
-  'timeSlot.startTime': 1 
-}, { unique: true });
-
-// Index for efficient queries
-classBookingSchema.index({ bookingDate: 1, status: 1 });
-classBookingSchema.index({ user: 1, status: 1 });
-
-// Check if booking can be cancelled (24 hours before class)
-classBookingSchema.methods.canBeCancelled = function() {
-  const now = new Date();
-  const classDateTime = new Date(this.bookingDate);
-  const [hours, minutes] = this.timeSlot.startTime.split(':');
-  classDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0);
-  
-  const timeDiff = classDateTime - now;
-  const hoursDiff = timeDiff / (1000 * 60 * 60);
-  
-  return hoursDiff >= 24;
-};
-
-module.exports = mongoose.model('ClassBooking', classBookingSchema);
+module.exports = ClassBooking;
