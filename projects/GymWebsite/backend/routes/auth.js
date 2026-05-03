@@ -360,7 +360,7 @@ router.post('/google', async (req, res) => {
     const email = userInfo?.email || tokenVerification.email;
     const googleId = userInfo?.sub || tokenVerification.sub;
     const given_name = userInfo?.given_name || 'User';
-    const family_name = userInfo?.family_name || '';
+    const family_name = userInfo?.family_name || given_name;
     const picture = userInfo?.picture || '';
 
     if (!email) {
