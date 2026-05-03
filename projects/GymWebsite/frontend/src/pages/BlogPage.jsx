@@ -7,7 +7,7 @@ const BlogPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedArticle, setSelectedArticle] = useState(null);
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_URL = import.meta.env.VITE_API_URL || 'https://gymfit-pro-dctn.onrender.com/api';
 
   const categories = [
     { id: 'all', name: 'All Articles' },

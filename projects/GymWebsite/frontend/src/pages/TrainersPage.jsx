@@ -17,7 +17,7 @@ const TrainersPage = () => {
   const [formData, setFormData] = useState({ serviceType: 'personal-training', preferredDate: '', message: '' });
   const [sending, setSending] = useState(false);
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_URL = import.meta.env.VITE_API_URL || 'https://gymfit-pro-dctn.onrender.com/api';
 
   const trainerImages = [
     'https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=600&q=80',

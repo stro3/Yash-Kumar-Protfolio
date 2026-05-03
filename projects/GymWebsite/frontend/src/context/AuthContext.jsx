@@ -105,7 +105,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // API base URL
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  const API_URL = import.meta.env.VITE_API_URL || 'https://gymfit-pro-dctn.onrender.com/api';
 
   // Fetch user profile
   const fetchUserProfile = async () => {
