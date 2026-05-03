@@ -12,6 +12,9 @@ const classRoutes = require('../routes/classes');
 const trainerRoutes = require('../routes/trainers');
 const paymentRoutes = require('../routes/payments');
 const blogRoutes = require('../routes/blog');
+const adminRoutes = require('../routes/admin');
+const notificationRoutes = require('../routes/notifications');
+const reportRoutes = require('../routes/reports');
 
 const app = express();
 
@@ -41,6 +44,9 @@ app.use('/api/classes', classRoutes);
 app.use('/api/trainers', trainerRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/blog', blogRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/reports', reportRoutes);
 
 app.get('/api/health', async (req, res) => {
     res.status(200).json({

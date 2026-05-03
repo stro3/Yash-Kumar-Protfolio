@@ -21,7 +21,6 @@ import PaymentPage from './pages/PaymentPage';
 import ReportsAnalytics from './pages/ReportsAnalytics';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';
-import DebugRouter from './components/DebugRouter';
 import './App.css';
 
 function App() {
@@ -32,7 +31,6 @@ function App() {
           <div className="min-h-screen bg-white flex flex-col">
             <Navbar />
             <main className="flex-1">
-              <DebugRouter />
               <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
