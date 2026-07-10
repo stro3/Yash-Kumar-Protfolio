@@ -5,98 +5,209 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Professional software developer portfolio showcasing projects, skills, and experience in full-stack development">
-    <meta name="keywords" content="software developer, portfolio, web development, full-stack engineer">
-    <meta name="author" content="Developer Name">
-    <title>Developer Portfolio | Software Engineer</title>
+        content="Yash Kumar - Full-Stack Software Engineer portfolio featuring interactive 3D animations, project showcases, and professional experience">
+    <meta name="keywords" content="Yash Kumar, software developer, portfolio, full-stack engineer, 3D portfolio">
+    <meta name="author" content="Yash Kumar">
+    <title>Yash Kumar | Full-Stack Software Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-    <nav class="navbar">
+<body data-theme="dark">
+
+    <div id="loader" class="loader-overlay">
+        <div class="loader-content">
+            <div class="loader-initials">
+                <span class="loader-letter" data-letter="Y">Y</span>
+                <span class="loader-letter" data-letter="K">K</span>
+            </div>
+            <div class="loader-bar">
+                <div class="loader-bar-fill"></div>
+            </div>
+            <p class="loader-text">Initializing 3D Environment...</p>
+        </div>
+    </div>
+
+
+    <canvas id="bg-canvas" class="bg-canvas"></canvas>
+
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <ul class="nav-menu">
+            <a href="#home" class="nav-logo">
+                <span class="logo-text">YK</span>
+                <span class="logo-dot"></span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#certificates" class="nav-link">Certificates</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#certificates" class="nav-link">Certificates</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-                <span class="toggle-icon"></span>
-            </button>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </nav>
 
     <section id="home" class="hero">
+        <canvas id="hero-canvas" class="hero-canvas"></canvas>
         <div class="hero-container">
             <div class="hero-content">
+                <div class="hero-badge animate-3d">
+                    <span class="badge-dot"></span>
+                    Available for work
+                </div>
                 <h1 class="hero-title">
-                    <span class="greeting animate-fade-up">Hi, I'm</span>
-                    <span class="name animate-fade-up delay-1">Yash Kumar</span>
+                    <span class="title-line">
+                        <span class="split-text" data-animate="true">Hi, I'm</span>
+                    </span>
+                    <span class="title-line">
+                        <span class="split-text name-gradient" data-animate="true">Yash Kumar</span>
+                    </span>
                 </h1>
-                <h2 class="hero-subtitle animate-fade-up delay-2">Full-Stack Software Engineer</h2>
-                <p class="hero-description animate-fade-up delay-3">Building scalable web applications with modern
-                    technologies and clean
-                    architecture patterns</p>
-                <div class="hero-buttons animate-fade-up delay-4" style="display: flex; gap: 16px; flex-wrap: wrap;">
-                    <a href="#projects" class="cta-button">View My Work</a>
-                    <a href="assets/Yash-Resume.pdf" download="Yash_Kumar_Resume.pdf" class="cta-button" style="background: transparent; border: 2px solid var(--accent-primary); color: var(--accent-primary);">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 6px;">
+                <h2 class="hero-subtitle">
+                    <span class="typed-text" id="typedText"></span>
+                    <span class="typed-cursor">|</span>
+                </h2>
+                <p class="hero-description animate-3d">Building scalable web applications with modern technologies and
+                    clean architecture patterns. Turning complex problems into elegant solutions.</p>
+                <div class="hero-buttons animate-3d">
+                    <a href="#projects" class="btn btn-primary magnetic-btn">
+                        <span class="btn-text">View My Work</span>
+                        <span class="btn-glow"></span>
+                    </a>
+                    <a href="assets/Yash-Resume.pdf" download="Yash_Kumar_Resume.pdf"
+                        class="btn btn-outline magnetic-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                             <polyline points="7 10 12 15 17 10"></polyline>
                             <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>Download Resume
+                        </svg>
+                        <span class="btn-text">Download Resume</span>
+                        <span class="btn-glow"></span>
                     </a>
                 </div>
-            </div>
-            <div class="hero-visual animate-fade-left">
-                <div class="code-window">
-                    <div class="window-header">
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
+                <div class="hero-stats animate-3d">
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="10">0</span>
+                        <span class="stat-plus">+</span>
+                        <span class="stat-label">Projects</span>
                     </div>
-                    <div class="code-content">
-                        <pre><code id="typewriter-code"></code><span class="typing-cursor">|</span></pre>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="5">0</span>
+                        <span class="stat-plus">+</span>
+                        <span class="stat-label">Technologies</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="4">0</span>
+                        <span class="stat-plus">+</span>
+                        <span class="stat-label">Certificates</span>
                     </div>
                 </div>
             </div>
+            <div class="hero-visual">
+                <div class="photo-frame-3d">
+                    <div class="photo-orbit">
+                        <div class="orbit-ring ring-1"></div>
+                        <div class="orbit-ring ring-2"></div>
+                        <div class="orbit-ring ring-3"></div>
+                    </div>
+                    <div class="photo-container">
+                        <img src="assets/profile-photo.png" alt="Yash Kumar" class="profile-photo"
+                            id="profilePhoto">
+                        <div class="photo-glow"></div>
+                        <div class="photo-border-animate"></div>
+                    </div>
+                    <div class="floating-tech-icons">
+                        <div class="tech-float-icon" style="--delay: 0s; --x: -80px; --y: -60px;">
+                            <span>JS</span>
+                        </div>
+                        <div class="tech-float-icon" style="--delay: 0.5s; --x: 80px; --y: -40px;">
+                            <span>PY</span>
+                        </div>
+                        <div class="tech-float-icon" style="--delay: 1s; --x: -90px; --y: 60px;">
+                            <span>C++</span>
+                        </div>
+                        <div class="tech-float-icon" style="--delay: 1.5s; --x: 70px; --y: 70px;">
+                            <span>React</span>
+                        </div>
+                        <div class="tech-float-icon" style="--delay: 2s; --x: 0px; --y: -90px;">
+                            <span>SQL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span>Scroll Down</span>
         </div>
     </section>
 
     <section id="about" class="about">
         <div class="section-container">
-            <h2 class="section-title reveal-text">About Me</h2>
+            <div class="section-header">
+                <span class="section-tag animate-3d">01 // ABOUT</span>
+                <h2 class="section-title split-text" data-animate="true">About Me</h2>
+            </div>
             <div class="about-content">
                 <div class="about-text">
-                    <p class="about-paragraph">Hey there! I am so motivated to be able to develop user-friendly,
-                        practical software. I develop applications using many different tech stacks, including but not
-                        limited to HTML/CSS/JS, Python, Java, C/C++, PHP, MongoDB and MySQL.</p>
-                    <p class="about-paragraph">My primary focus is building Windows desktop applications that allow
-                        users the flexibility and power to manage their business in a simple way — whether through our
-                        inventory management system or the educational apps we create, I love taking an idea and turning
-                        it into a reliable and hassle-free solution.
-                    </p>
-                    <p class="about-paragraph">Outside of writing code, I like to explore different technologies, read
-                        about new software development methodologies, and work to develop a better understanding of all
-                        aspects of the software development process.</p>
+                    <p class="about-paragraph animate-3d">Hey there! I am so motivated to be able to develop
+                        user-friendly, practical software. I develop applications using many different tech stacks,
+                        including but not limited to HTML/CSS/JS, Python, Java, C/C++, PHP, MongoDB and MySQL.</p>
+                    <p class="about-paragraph animate-3d">My primary focus is building Windows desktop applications that
+                        allow users the flexibility and power to manage their business in a simple way -- whether through
+                        our inventory management system or the educational apps we create, I love taking an idea and
+                        turning it into a reliable and hassle-free solution.</p>
+                    <p class="about-paragraph animate-3d">Outside of writing code, I like to explore different
+                        technologies, read about new software development methodologies, and work to develop a better
+                        understanding of all aspects of the software development process.</p>
                 </div>
-                <div class="about-terminal">
-                    <div class="terminal-header">
-                        <span class="terminal-dot red"></span>
-                        <span class="terminal-dot yellow"></span>
-                        <span class="terminal-dot green"></span>
-                        <span class="terminal-title">developer.js</span>
-                    </div>
-                    <div class="terminal-body">
-                        <pre><code id="typewriter-terminal"></code><span class="typing-cursor terminal-cursor">|</span></pre>
+                <div class="about-terminal animate-3d">
+                    <div class="terminal-window">
+                        <div class="terminal-header">
+                            <span class="terminal-dot" style="background: #ff5f57;"></span>
+                            <span class="terminal-dot" style="background: #febc2e;"></span>
+                            <span class="terminal-dot" style="background: #28c840;"></span>
+                            <span class="terminal-title">developer.js</span>
+                        </div>
+                        <div class="terminal-body">
+                            <pre><code id="typewriter-terminal"></code><span class="typing-cursor">|</span></pre>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,127 +216,193 @@
 
     <section id="skills" class="skills">
         <div class="section-container">
-            <h2 class="section-title reveal-text">Technical Skills</h2>
-            <div class="skills-categories">
-                <div class="skill-category">
-                    <h3 class="category-title">Frontend</h3>
-                    <div class="skill-items">
-                        <div class="skill-item html">HTML</div>
-                        <div class="skill-item css">CSS</div>
-                        <div class="skill-item js">JavaScript</div>
-                        <div class="skill-item react">React</div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3 class="category-title">Backend</h3>
-                    <div class="skill-items">
-                        <div class="skill-item python">Python</div>
-                        <div class="skill-item java">Java</div>
-                        <div class="skill-item cpp">C++</div>
-                        <div class="skill-item php">PHP</div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3 class="category-title">Database & Tools</h3>
-                    <div class="skill-items">
-                        <div class="skill-item mysql">MySQL</div>
-                        <div class="skill-item mongo">MongoDB</div>
-                        <div class="skill-item git">Git</div>
-                    </div>
-                </div>
+            <div class="section-header">
+                <span class="section-tag animate-3d">02 // SKILLS</span>
+                <h2 class="section-title split-text" data-animate="true">Technical Arsenal</h2>
             </div>
-        </div>
-    </section>
-
-    <section id="certificates" class="certificates">
-        <div class="section-container">
-            <h2 class="section-title reveal-text">Certifications</h2>
-            <div class="certificates-grid">
-                <div class="certificate-card">
-                    <div class="certificate-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
+            <div class="skills-grid">
+                <div class="skill-card-3d animate-3d" data-skill="html">
+                    <div class="skill-card-inner">
+                        <div class="skill-card-front">
+                            <div class="skill-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <polyline points="16 18 22 12 16 6"></polyline>
+                                    <polyline points="8 6 2 12 8 18"></polyline>
+                                </svg>
+                            </div>
+                            <h3>HTML5</h3>
+                            <span class="skill-level">Advanced</span>
+                        </div>
+                        <div class="skill-card-back">
+                            <p>Semantic markup, accessibility, SEO optimization, Web Components</p>
+                            <div class="skill-bar"><div class="skill-bar-fill" style="--fill: 95%"></div></div>
+                        </div>
                     </div>
-                    <h3 class="certificate-title">ISRO Certificate</h3>
-                    <p class="certificate-issuer">Indian Space Research Organisation</p>
-                    <a href="Certificate/ISRO.pdf" class="certificate-link" target="_blank">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        View Certificate
-                    </a>
                 </div>
-                <div class="certificate-card">
-                    <div class="certificate-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                            <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                        </svg>
+                <div class="skill-card-3d animate-3d" data-skill="css">
+                    <div class="skill-card-inner">
+                        <div class="skill-card-front">
+                            <div class="skill-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                    <path d="M2 17l10 5 10-5"></path>
+                                    <path d="M2 12l10 5 10-5"></path>
+                                </svg>
+                            </div>
+                            <h3>CSS3</h3>
+                            <span class="skill-level">Advanced</span>
+                        </div>
+                        <div class="skill-card-back">
+                            <p>3D Transforms, Animations, Grid, Flexbox, Custom Properties</p>
+                            <div class="skill-bar"><div class="skill-bar-fill" style="--fill: 90%"></div></div>
+                        </div>
                     </div>
-                    <h3 class="certificate-title">Android Mobile App Development</h3>
-                    <p class="certificate-issuer">Introduction to Android Development</p>
-                    <a href="Certificate/Introdu ction to Android Mobile Application D evelopment.pdf"
-                        class="certificate-link" target="_blank">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        View Certificate
-                    </a>
                 </div>
-                <div class="certificate-card">
-                    <div class="certificate-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <polyline points="16 18 22 12 16 6"></polyline>
-                            <polyline points="8 6 2 12 8 18"></polyline>
-                        </svg>
+                <div class="skill-card-3d animate-3d" data-skill="js">
+                    <div class="skill-card-inner">
+                        <div class="skill-card-front">
+                            <div class="skill-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                    <path d="M9 15l3-3 3 3"></path>
+                                </svg>
+                            </div>
+                            <h3>JavaScript</h3>
+                            <span class="skill-level">Advanced</span>
+                        </div>
+                        <div class="skill-card-back">
+                            <p>ES6+, DOM manipulation, Async/Await, WebGL, Three.js</p>
+                            <div class="skill-bar"><div class="skill-bar-fill" style="--fill: 90%"></div></div>
+                        </div>
                     </div>
-                    <h3 class="certificate-title">HTML5 Fundamentals</h3>
-                    <p class="certificate-issuer">Introduction to HTML5</p>
-                    <a href="Certificate/Introdu ction to HTML5.pdf" class="certificate-link" target="_blank">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        View Certificate
-                    </a>
                 </div>
-                <div class="certificate-card">
-                    <div class="certificate-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="1.5">
-                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                            <path d="M2 17l10 5 10-5"></path>
-                            <path d="M2 12l10 5 10-5"></path>
-                        </svg>
+                <div class="skill-card-3d animate-3d" data-skill="react">
+                    <div class="skill-card-inner">
+                        <div class="skill-card-front">
+                            <div class="skill-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <circle cx="12" cy="12" r="2"></circle>
+                                    <ellipse cx="12" cy="12" rx="10" ry="4"
+                                        transform="rotate(0 12 12)"></ellipse>
+                                    <ellipse cx="12" cy="12" rx="10" ry="4"
+                                        transform="rotate(60 12 12)"></ellipse>
+                                    <ellipse cx="12" cy="12" rx="10" ry="4"
+                                        transform="rotate(120 12 12)"></ellipse>
+                                </svg>
+                            </div>
+                            <h3>React</h3>
+                            <span class="skill-level">Intermediate</span>
+                        </div>
+                        <div class="skill-card-back">
+                            <p>Hooks, Context API, React Router, State Management</p>
+                            <div class="skill-bar"><div class="skill-bar-fill" style="--fill: 75%"></div></div>
+                        </div>
                     </div>
-                    <h3 class="certificate-title">Python Programming</h3>
-                    <p class="certificate-issuer">Programming for Everybody - Getting Started with Python</p>
-                    <a href="Certificate/Programming for Everybody (Getting Started w ith Python).pdf"
-                        class="certificate-link" target="_blank">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        View Certificate
-                    </a>
+                </div>
+                <div class="skill-card-3d animate-3d" data-skill="python">
+                    <div class="skill-card-inner">
+                        <div class="skill-card-front">
+                            <div class="skill-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                                    <path d="M8 12l2 2 4-4"></path>
+                                </svg>
+                            </div>
+                            <h3>Python</h3>
+                            <span class="skill-level">Advanced</span>
+                        </div>
+                        <div class="skill-card-back">
+                            <p>Flask, Django, Automation, Data Processing, Desktop Apps</p>
+                            <div class="skill-bar"><div class="skill-bar-fill" style="--fill: 88%"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card-3d animate-3d" data-skill="java">
+                    <div class="skill-card-inner">
+                        <div class="skill-card-front">
+                            <div class="skill-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M2 20h20"></path>
+                                    <path d="M5 20V8l7-5 7 5v12"></path>
+                                    <path d="M9 20v-4h6v4"></path>
+                                </svg>
+                            </div>
+                            <h3>Java</h3>
+                            <span class="skill-level">Intermediate</span>
+                        </div>
+                        <div class="skill-card-back">
+                            <p>OOP, Spring Boot, Desktop Applications, Data Structures</p>
+                            <div class="skill-bar"><div class="skill-bar-fill" style="--fill: 70%"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card-3d animate-3d" data-skill="cpp">
+                    <div class="skill-card-inner">
+                        <div class="skill-card-front">
+                            <div class="skill-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M6 3v18"></path>
+                                    <path d="M18 3v18"></path>
+                                    <path d="M3 12h18"></path>
+                                    <path d="M3 6h18"></path>
+                                    <path d="M3 18h18"></path>
+                                </svg>
+                            </div>
+                            <h3>C++</h3>
+                            <span class="skill-level">Intermediate</span>
+                        </div>
+                        <div class="skill-card-back">
+                            <p>STL, Algorithms, Memory Management, Competitive Programming</p>
+                            <div class="skill-bar"><div class="skill-bar-fill" style="--fill: 72%"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card-3d animate-3d" data-skill="db">
+                    <div class="skill-card-inner">
+                        <div class="skill-card-front">
+                            <div class="skill-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                                </svg>
+                            </div>
+                            <h3>MySQL / MongoDB</h3>
+                            <span class="skill-level">Advanced</span>
+                        </div>
+                        <div class="skill-card-back">
+                            <p>Schema Design, Query Optimization, Indexing, Aggregation</p>
+                            <div class="skill-bar"><div class="skill-bar-fill" style="--fill: 82%"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card-3d animate-3d" data-skill="git">
+                    <div class="skill-card-inner">
+                        <div class="skill-card-front">
+                            <div class="skill-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <circle cx="18" cy="18" r="3"></circle>
+                                    <circle cx="6" cy="6" r="3"></circle>
+                                    <path d="M6 21V9a9 9 0 0 0 9 9"></path>
+                                </svg>
+                            </div>
+                            <h3>Git / GitHub</h3>
+                            <span class="skill-level">Advanced</span>
+                        </div>
+                        <div class="skill-card-back">
+                            <p>Branching, Merging, CI/CD, Pull Requests, Code Review</p>
+                            <div class="skill-bar"><div class="skill-bar-fill" style="--fill: 85%"></div></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -233,28 +410,33 @@
 
     <section id="projects" class="projects">
         <div class="section-container">
-            <h2 class="section-title reveal-text">Featured Projects</h2>
-            <div class="projects-grid" id="projectsContainer">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="assets/gym-website.png" alt="Gym Website">
+            <div class="section-header">
+                <span class="section-tag animate-3d">03 // PROJECTS</span>
+                <h2 class="section-title split-text" data-animate="true">Featured Work</h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card-3d animate-3d">
+                    <div class="project-card-glow"></div>
+                    <div class="project-image-wrap">
+                        <img src="assets/gym-website.png" alt="Gym Website" loading="lazy">
+                        <div class="project-image-overlay"></div>
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">GymFit Pro</h3>
-                        <p class="project-description">Production-grade gym management platform with member dashboard, class booking system, real-time trainer tracking, admin panel with live data, WhatsApp notification system, and Google OAuth authentication.</p>
+                        <p class="project-description">Production-grade gym management platform with member dashboard,
+                            class booking system, real-time trainer tracking, admin panel with live data, WhatsApp
+                            notification system, and Google OAuth authentication.</p>
                         <div class="project-tech">
                             <span class="tech-tag">React 19</span>
                             <span class="tech-tag">Vite</span>
                             <span class="tech-tag">Tailwind CSS</span>
                             <span class="tech-tag">Node.js</span>
                             <span class="tech-tag">Express</span>
-                            <span class="tech-tag">Sequelize</span>
                             <span class="tech-tag">PostgreSQL</span>
-                            <span class="tech-tag">JWT Auth</span>
                         </div>
                         <div class="project-links">
                             <a href="https://gym-fit-pro-tawny.vercel.app/" class="project-link" target="_blank">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                                     <polyline points="15 3 21 3 21 9"></polyline>
@@ -263,9 +445,11 @@
                                 Live Demo
                             </a>
                             <a href="https://github.com/stro3/GymFit-Pro" class="project-link" target="_blank">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                    <path
+                                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                    </path>
                                 </svg>
                                 Source Code
                             </a>
@@ -273,15 +457,17 @@
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="assets/pet-adoption.png" alt="Pet Adoption Website">
+                <div class="project-card-3d animate-3d">
+                    <div class="project-card-glow"></div>
+                    <div class="project-image-wrap">
+                        <img src="assets/pet-adoption.png" alt="Pet Adoption Website" loading="lazy">
+                        <div class="project-image-overlay"></div>
                     </div>
                     <div class="project-content">
-                        <h3 class="project-title">Pet Adoption Website</h3>
-                        <p class="project-description">Full-stack pet adoption platform with user authentication,
-                            pet listings, adoption applications, live chat support, and employee admin portal.
-                            Features beautiful UI with pet cards and adoption workflow.</p>
+                        <h3 class="project-title">Pet Adoption Platform</h3>
+                        <p class="project-description">Full-stack pet adoption platform with user authentication, pet
+                            listings, adoption applications, live chat support, and employee admin portal with beautiful
+                            UI.</p>
                         <div class="project-tech">
                             <span class="tech-tag">HTML5</span>
                             <span class="tech-tag">CSS3</span>
@@ -291,7 +477,7 @@
                         </div>
                         <div class="project-links">
                             <a href="projects/Pet Adoption Website/index.html" class="project-link" target="_blank">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                                     <polyline points="15 3 21 3 21 9"></polyline>
@@ -303,15 +489,17 @@
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="assets/social-dashboard.png" alt="Social Media Dashboard">
+                <div class="project-card-3d animate-3d">
+                    <div class="project-card-glow"></div>
+                    <div class="project-image-wrap">
+                        <img src="assets/social-dashboard.png" alt="Social Media Dashboard" loading="lazy">
+                        <div class="project-image-overlay"></div>
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Social Media Dashboard</h3>
                         <p class="project-description">Full-featured analytics dashboard with follower stats for
                             Facebook, Twitter, Instagram, YouTube. Features interactive charts, audience demographics,
-                            content management, and post scheduling.</p>
+                            and post scheduling.</p>
                         <div class="project-tech">
                             <span class="tech-tag">HTML5</span>
                             <span class="tech-tag">CSS3</span>
@@ -320,7 +508,7 @@
                         </div>
                         <div class="project-links">
                             <a href="projects/social-dashboard/index.html" class="project-link" target="_blank">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                                     <polyline points="15 3 21 3 21 9"></polyline>
@@ -332,24 +520,25 @@
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="assets/weather-dashboard.png" alt="Weather Dashboard">
+                <div class="project-card-3d animate-3d">
+                    <div class="project-card-glow"></div>
+                    <div class="project-image-wrap">
+                        <img src="assets/weather-dashboard.png" alt="Weather Dashboard" loading="lazy">
+                        <div class="project-image-overlay"></div>
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Weather Dashboard</h3>
                         <p class="project-description">Real-time weather analytics with OpenWeatherMap API integration.
-                            Features city search, geolocation, current conditions, 5-day forecast, and
-                            Celsius/Fahrenheit toggle.</p>
+                            Features city search, geolocation, current conditions, 5-day forecast, and unit toggle.</p>
                         <div class="project-tech">
                             <span class="tech-tag">HTML5</span>
                             <span class="tech-tag">CSS3</span>
                             <span class="tech-tag">JavaScript</span>
-                            <span class="tech-tag">API</span>
+                            <span class="tech-tag">REST API</span>
                         </div>
                         <div class="project-links">
                             <a href="projects/weather-dashboard/index.html" class="project-link" target="_blank">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                                     <polyline points="15 3 21 3 21 9"></polyline>
@@ -361,15 +550,16 @@
                     </div>
                 </div>
 
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="assets/password-generator.png" alt="Password Generator">
+                <div class="project-card-3d animate-3d">
+                    <div class="project-card-glow"></div>
+                    <div class="project-image-wrap">
+                        <img src="assets/password-generator.png" alt="Password Generator" loading="lazy">
+                        <div class="project-image-overlay"></div>
                     </div>
                     <div class="project-content">
                         <h3 class="project-title">Password Generator</h3>
-                        <p class="project-description">Secure password generator with customizable options including
-                            length, uppercase, lowercase, numbers, and symbols. Features strength indicator and copy to
-                            clipboard.</p>
+                        <p class="project-description">Secure password generator with customizable length, character
+                            options, strength indicator, copy to clipboard, and password history tracking.</p>
                         <div class="project-tech">
                             <span class="tech-tag">HTML5</span>
                             <span class="tech-tag">CSS3</span>
@@ -377,7 +567,7 @@
                         </div>
                         <div class="project-links">
                             <a href="projects/password-generator/index.html" class="project-link" target="_blank">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2">
                                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                                     <polyline points="15 3 21 3 21 9"></polyline>
@@ -389,28 +579,126 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section id="certificates" class="certificates">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag animate-3d">04 // CERTIFICATES</span>
+                <h2 class="section-title split-text" data-animate="true">Certifications</h2>
+            </div>
+            <div class="certificates-grid">
+                <div class="cert-flip-card animate-3d">
+                    <div class="cert-flip-inner">
+                        <div class="cert-front">
+                            <div class="cert-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                            </div>
+                            <h3>ISRO Certificate</h3>
+                            <p>Indian Space Research Organisation</p>
+                        </div>
+                        <div class="cert-back">
+                            <p>Space science and technology certification from India's premier space agency</p>
+                            <a href="Certificate/ISRO.pdf" class="cert-link" target="_blank">View Certificate</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cert-flip-card animate-3d">
+                    <div class="cert-flip-inner">
+                        <div class="cert-front">
+                            <div class="cert-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                                </svg>
+                            </div>
+                            <h3>Android Development</h3>
+                            <p>Mobile App Development</p>
+                        </div>
+                        <div class="cert-back">
+                            <p>Introduction to Android mobile application development fundamentals</p>
+                            <a href="Certificate/Introdu ction to Android Mobile Application D evelopment.pdf"
+                                class="cert-link" target="_blank">View Certificate</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cert-flip-card animate-3d">
+                    <div class="cert-flip-inner">
+                        <div class="cert-front">
+                            <div class="cert-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <polyline points="16 18 22 12 16 6"></polyline>
+                                    <polyline points="8 6 2 12 8 18"></polyline>
+                                </svg>
+                            </div>
+                            <h3>HTML5 Fundamentals</h3>
+                            <p>Introduction to HTML5</p>
+                        </div>
+                        <div class="cert-back">
+                            <p>Comprehensive HTML5 web development certification</p>
+                            <a href="Certificate/Introdu ction to HTML5.pdf" class="cert-link" target="_blank">View
+                                Certificate</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cert-flip-card animate-3d">
+                    <div class="cert-flip-inner">
+                        <div class="cert-front">
+                            <div class="cert-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                    <path d="M2 17l10 5 10-5"></path>
+                                    <path d="M2 12l10 5 10-5"></path>
+                                </svg>
+                            </div>
+                            <h3>Python Programming</h3>
+                            <p>Getting Started with Python</p>
+                        </div>
+                        <div class="cert-back">
+                            <p>Programming for Everybody - Python fundamentals and core concepts</p>
+                            <a href="Certificate/Programming for Everybody (Getting Started w ith Python).pdf"
+                                class="cert-link" target="_blank">View Certificate</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="services" class="services">
         <div class="section-container">
-            <h2 class="section-title reveal-text">Services</h2>
+            <div class="section-header">
+                <span class="section-tag animate-3d">05 // SERVICES</span>
+                <h2 class="section-title split-text" data-animate="true">What I Offer</h2>
+            </div>
             <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <div class="service-card-3d animate-3d">
+                    <div class="service-glow"></div>
+                    <div class="service-icon-3d">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
                             <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                             <line x1="8" y1="21" x2="16" y2="21"></line>
                             <line x1="12" y1="17" x2="12" y2="21"></line>
                         </svg>
                     </div>
-                    <h3 class="service-title">Desktop App Development</h3>
-                    <p class="service-description">Custom Windows applications for business management, inventory
-                        systems, and automation solutions using Python and Java.</p>
+                    <h3>Desktop App Development</h3>
+                    <p>Custom Windows applications for business management, inventory systems, and automation solutions
+                        using Python and Java.</p>
+                    <div class="service-border-anim"></div>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <div class="service-card-3d animate-3d">
+                    <div class="service-glow"></div>
+                    <div class="service-icon-3d">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -419,52 +707,58 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="service-title">Web Development</h3>
-                    <p class="service-description">Modern, responsive websites and web applications built with React,
-                        Node.js, and other cutting-edge technologies.</p>
+                    <h3>Web Development</h3>
+                    <p>Modern, responsive websites and web applications built with React, Node.js, and cutting-edge
+                        technologies.</p>
+                    <div class="service-border-anim"></div>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <div class="service-card-3d animate-3d">
+                    <div class="service-glow"></div>
+                    <div class="service-icon-3d">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
                             <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
                             <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
                             <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
                         </svg>
                     </div>
-                    <h3 class="service-title">Database Solutions</h3>
-                    <p class="service-description">Database design, optimization, and management using MySQL, MongoDB,
-                        and PostgreSQL for scalable data storage.</p>
+                    <h3>Database Solutions</h3>
+                    <p>Database design, optimization, and management using MySQL, MongoDB, and PostgreSQL for scalable
+                        data storage.</p>
+                    <div class="service-border-anim"></div>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <div class="service-card-3d animate-3d">
+                    <div class="service-glow"></div>
+                    <div class="service-icon-3d">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
                             <path d="M12 20h9"></path>
                             <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                         </svg>
                     </div>
-                    <h3 class="service-title">UI/UX Design</h3>
-                    <p class="service-description">Clean, intuitive user interface designs focused on user experience,
-                        accessibility, and modern aesthetics.</p>
+                    <h3>UI/UX Design</h3>
+                    <p>Clean, intuitive user interface designs focused on user experience, accessibility, and modern
+                        aesthetics.</p>
+                    <div class="service-border-anim"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="resume-section">
+    <section class="resume-cta">
         <div class="section-container">
-            <div class="resume-content">
-                <h2 class="resume-title">Interested in working together?</h2>
-                <p class="resume-description">Download my resume to learn more about my experience and qualifications
-                </p>
-                <a href="assets/resume.pdf" download class="download-button">
+            <div class="resume-cta-content animate-3d">
+                <div class="resume-cta-bg"></div>
+                <h2>Interested in working together?</h2>
+                <p>Download my resume to learn more about my experience and qualifications</p>
+                <a href="assets/Yash-Resume.pdf" download class="btn btn-primary magnetic-btn">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
                         <line x1="12" y1="15" x2="12" y2="3"></line>
                     </svg>
-                    Download Resume
+                    <span class="btn-text">Download Resume</span>
+                    <span class="btn-glow"></span>
                 </a>
             </div>
         </div>
@@ -472,84 +766,97 @@
 
     <section id="contact" class="contact">
         <div class="section-container">
-            <h2 class="section-title">Get In Touch</h2>
-            <p class="contact-subtitle">Have a project in mind or want to discuss opportunities? Feel free to reach out.
-            </p>
+            <div class="section-header">
+                <span class="section-tag animate-3d">06 // CONTACT</span>
+                <h2 class="section-title split-text" data-animate="true">Get In Touch</h2>
+            </div>
+            <p class="contact-subtitle animate-3d">Have a project in mind or want to discuss opportunities? Feel free to
+                reach out.</p>
             <div class="contact-content">
-                <form class="contact-form" id="contactForm">
+                <form class="contact-form glass-panel animate-3d" id="contactForm">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name" class="form-label">Your Name</label>
                             <input type="text" id="name" name="name" class="form-input" required>
+                            <span class="input-highlight"></span>
                         </div>
                         <div class="form-group">
                             <label for="email" class="form-label">Your Email</label>
                             <input type="email" id="email" name="email" class="form-input" required>
+                            <span class="input-highlight"></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="subject" class="form-label">Subject</label>
                         <input type="text" id="subject" name="subject" class="form-input" required>
+                        <span class="input-highlight"></span>
                     </div>
                     <div class="form-group">
                         <label for="message" class="form-label">Message</label>
                         <textarea id="message" name="message" class="form-input form-textarea" rows="5"
                             required></textarea>
+                        <span class="input-highlight"></span>
                     </div>
-                    <button type="submit" class="form-submit">
+                    <button type="submit" class="btn btn-primary form-submit magnetic-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <line x1="22" y1="2" x2="11" y2="13"></line>
                             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                         </svg>
-                        Send Message
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-glow"></span>
                     </button>
                 </form>
-                <div class="social-icons-row">
-                    <a href="mailto:yashkumar@example.com" class="social-icon-btn" title="Email">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                <div class="social-links-3d animate-3d">
+                    <a href="mailto:yashkumar@example.com" class="social-card-3d magnetic-btn" title="Email">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
                             </path>
                             <polyline points="22,6 12,13 2,6"></polyline>
                         </svg>
+                        <span>Email</span>
                     </a>
                     <a href="https://www.linkedin.com/in/yash-kumar-b4201030b/" target="_blank"
-                        rel="noopener noreferrer" class="social-icon-btn" title="LinkedIn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                        rel="noopener noreferrer" class="social-card-3d magnetic-btn" title="LinkedIn">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
                             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
                             </path>
                             <rect x="2" y="9" width="4" height="12"></rect>
                             <circle cx="4" cy="4" r="2"></circle>
                         </svg>
+                        <span>LinkedIn</span>
                     </a>
-                    <a href="https://github.com/stro3" target="_blank" rel="noopener noreferrer" class="social-icon-btn"
-                        title="GitHub">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                    <a href="https://github.com/stro3" target="_blank" rel="noopener noreferrer"
+                        class="social-card-3d magnetic-btn" title="GitHub">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
                             <path
                                 d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
                             </path>
                         </svg>
+                        <span>GitHub</span>
                     </a>
                     <a href="https://twitter.com/yashkumar" target="_blank" rel="noopener noreferrer"
-                        class="social-icon-btn" title="Twitter">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                        class="social-card-3d magnetic-btn" title="Twitter">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
                             <path
                                 d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
                             </path>
                         </svg>
+                        <span>Twitter</span>
                     </a>
                     <a href="https://instagram.com/yashkumar" target="_blank" rel="noopener noreferrer"
-                        class="social-icon-btn" title="Instagram">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                        class="social-card-3d magnetic-btn" title="Instagram">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.5">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                         </svg>
+                        <span>Instagram</span>
                     </a>
                 </div>
             </div>
@@ -559,50 +866,23 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-content">
-                <p class="footer-text">&copy; 2024 Yash Kumar. Built with modern web technologies.</p>
-                <div class="social-links">
-                    <a href="https://github.com/stro3" target="_blank" rel="noopener noreferrer" class="social-link"
-                        aria-label="GitHub">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path
-                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-                            </path>
-                        </svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/yash-kumar-b4201030b/" target="_blank"
-                        rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
-                            </path>
-                            <rect x="2" y="9" width="4" height="12"></rect>
-                            <circle cx="4" cy="4" r="2"></circle>
-                        </svg>
-                    </a>
-                    <a href="https://twitter.com/yashkumar" target="_blank" rel="noopener noreferrer"
-                        class="social-link" aria-label="Twitter">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path
-                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
-                            </path>
-                        </svg>
-                    </a>
-                    <a href="https://instagram.com/yashkumar" target="_blank" rel="noopener noreferrer"
-                        class="social-link" aria-label="Instagram">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                        </svg>
-                    </a>
+                <div class="footer-brand">
+                    <span class="footer-logo">YK</span>
+                    <p>Building the future, one line at a time.</p>
                 </div>
+                <div class="footer-links">
+                    <a href="https://github.com/stro3" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://www.linkedin.com/in/yash-kumar-b4201030b/" target="_blank"
+                        rel="noopener noreferrer">LinkedIn</a>
+                    <a href="https://twitter.com/yashkumar" target="_blank" rel="noopener noreferrer">Twitter</a>
+                </div>
+                <p class="footer-copy">&copy; 2024 Yash Kumar. Crafted with precision.</p>
             </div>
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="three-scene.js"></script>
     <script src="script.js"></script>
 </body>
 
