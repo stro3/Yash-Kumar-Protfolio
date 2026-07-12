@@ -9,6 +9,7 @@
     <meta name="keywords" content="Yash Kumar, software developer, portfolio, full-stack engineer, 3D portfolio">
     <meta name="author" content="Yash Kumar">
     <title>Yash Kumar | Full-Stack Software Engineer</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%237c6ff5'/%3E%3Ctext x='50' y='68' font-family='Arial' font-size='48' font-weight='900' fill='white' text-anchor='middle'%3EYK%3C/text%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -18,6 +19,11 @@
 </head>
 
 <body data-theme="dark">
+
+    <div id="scrollProgress" class="scroll-progress"></div>
+
+    <div id="customCursor" class="custom-cursor"></div>
+    <div id="cursorDot" class="cursor-dot"></div>
 
     <div id="loader" class="loader-overlay">
         <div class="loader-content">
@@ -47,6 +53,7 @@
                 <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#certificates" class="nav-link">Certificates</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
                 <li><a href="#services" class="nav-link">Services</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
@@ -673,10 +680,83 @@
         </div>
     </section>
 
+    <section id="experience" class="experience">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag animate-3d">05 // JOURNEY</span>
+                <h2 class="section-title split-text" data-animate="true">Experience & Education</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item animate-3d">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-badge">Work Experience</div>
+                        <h3>Data Science Intern</h3>
+                        <span class="timeline-org">BrainyBeam</span>
+                        <span class="timeline-date">May 2025 - Jun 2025</span>
+                        <ul class="timeline-details">
+                            <li>Leveraged Python, Pandas, and NumPy for preprocessing 50+ MB of raw data, improving analysis efficiency by 25%</li>
+                            <li>Developed RESTful Flask API to serve predictive model results, increasing accuracy by 15%</li>
+                            <li>Delivered project milestones 1 week ahead of schedule using Git version control</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item animate-3d">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-badge">Research</div>
+                        <h3>AI Research Paper</h3>
+                        <span class="timeline-org">Published on arXiv</span>
+                        <span class="timeline-date">2025</span>
+                        <ul class="timeline-details">
+                            <li>Conducted research on AI applications and published a technical paper on arXiv</li>
+                            <li>Utilized Python and NumPy for data processing and numerical analysis</li>
+                            <li>Focused on optimizing algorithmic performance for specific AI use cases</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item animate-3d">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-badge">Achievement</div>
+                        <h3>Bharatiya Antariksh Hackathon 2025</h3>
+                        <span class="timeline-org">ISRO</span>
+                        <span class="timeline-date">Aug 2025</span>
+                        <ul class="timeline-details">
+                            <li>Trained machine learning models and developed the front-end interface</li>
+                            <li>Collaborated with a team to deliver a functional solution for the national hackathon</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item animate-3d">
+                    <div class="timeline-marker">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-badge">Education</div>
+                        <h3>Diploma in Computer Engineering</h3>
+                        <span class="timeline-org">Parul University, Vadodara</span>
+                        <span class="timeline-date">Apr 2026</span>
+                        <ul class="timeline-details">
+                            <li>GPA: 8.32/10 | CGPA: 7.63/10</li>
+                            <li>Coursework: Data Structures, DBMS, Web Technology, Software Engineering, Python</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="services" class="services">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag animate-3d">05 // SERVICES</span>
+                <span class="section-tag animate-3d">06 // SERVICES</span>
                 <h2 class="section-title split-text" data-animate="true">What I Offer</h2>
             </div>
             <div class="services-grid">
@@ -767,13 +847,13 @@
     <section id="contact" class="contact">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag animate-3d">06 // CONTACT</span>
+                <span class="section-tag animate-3d">07 // CONTACT</span>
                 <h2 class="section-title split-text" data-animate="true">Get In Touch</h2>
             </div>
             <p class="contact-subtitle animate-3d">Have a project in mind or want to discuss opportunities? Feel free to
                 reach out.</p>
             <div class="contact-content">
-                <form class="contact-form glass-panel animate-3d" id="contactForm">
+                <form class="contact-form glass-panel animate-3d" id="contactForm" action="https://formspree.io/f/xpwdzqkl" method="POST">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="name" class="form-label">Your Name</label>
@@ -808,7 +888,7 @@
                     </button>
                 </form>
                 <div class="social-links-3d animate-3d">
-                    <a href="mailto:yashkumar@example.com" class="social-card-3d magnetic-btn" title="Email">
+                    <a href="mailto:yashstro038@gmail.com" class="social-card-3d magnetic-btn" title="Email">
                         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
@@ -876,10 +956,16 @@
                         rel="noopener noreferrer">LinkedIn</a>
                     <a href="https://twitter.com/yashkumar" target="_blank" rel="noopener noreferrer">Twitter</a>
                 </div>
-                <p class="footer-copy">&copy; 2024 Yash Kumar. Crafted with precision.</p>
+                <p class="footer-copy">&copy; <span id="currentYear"></span> Yash Kumar. Crafted with precision.</p>
             </div>
         </div>
     </footer>
+
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+    </button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="three-scene.js"></script>

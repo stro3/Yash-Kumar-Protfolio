@@ -69,14 +69,31 @@
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section[id]');
 
+    const scrollProgress = document.getElementById('scrollProgress');
+    const backToTop = document.getElementById('backToTop');
+
     window.addEventListener('scroll', () => {
         const scrollY = window.pageYOffset;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollY / docHeight) * 100;
+
+        if (scrollProgress) {
+            scrollProgress.style.width = scrollPercent + '%';
+        }
 
         if (navbar) {
             if (scrollY > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
+            }
+        }
+
+        if (backToTop) {
+            if (scrollY > 400) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
             }
         }
 
@@ -95,6 +112,12 @@
             }
         });
     });
+
+    if (backToTop) {
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('navMenu');
@@ -154,6 +177,16 @@
     }, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
 
     animate3dElements.forEach(el => anim3dObserver.observe(el));
+
+    const timelineItems = document.querySelectorAll('.timeline-item.animate-3d');
+    timelineItems.forEach((el, i) => {
+        el.style.transitionDelay = (i * 0.15) + 's';
+    });
+
+    const yearEl = document.getElementById('currentYear');
+    if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+    }
 
     const typedText = document.getElementById('typedText');
     if (typedText) {
